@@ -9,9 +9,12 @@ import {
   Image,
   ImageBackground,
   Dimensions,
+  Alert,
 } from "react-native";
 import React, { useState, useContext, useLayoutEffect, useEffect,useRef } from "react";
 import { Feather } from "@expo/vector-icons";
+import axios from 'axios';
+
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -21,18 +24,22 @@ import { UserType } from "../UserContext";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 
+
 const ChatMessagesScreen = () => {
+
+  const { userId, setUserId,userRole,setUserRole } = useContext(UserType);
 
   const [showEmojiSelector, setShowEmojiSelector] = useState(false);
   const [selectedMessages, setSelectedMessages] = useState([]);
   const [messages, setMessages] = useState([]);
   const [recepientData, setRecepientData] = useState();
   const navigation = useNavigation();
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState("")
+  const [isAdd, setIsAdd] = useState("");
   const route = useRoute();
   const { recepientId } = route.params;
   const [message, setMessage] = useState("");
-  const { userId, setUserId } = useContext(UserType);
+  const boardingId = "652fd465ecc41770f2f531e5"
 
   const scrollViewRef = useRef(null);
 
@@ -54,6 +61,28 @@ const ChatMessagesScreen = () => {
     setShowEmojiSelector(!showEmojiSelector);
   };
 
+  const addTenant = async () => {
+    console.log(recepientData?.myboarding +" == "+boardingId); // Log the response for now
+
+    if (recepientData?.myboarding) {
+      Alert.alert("This tenant already in a boarding");
+    } else {
+      try {
+        const response = await axios.put(
+          `http://192.168.1.13:8000/api/boardings/${boardingId}/addtenant`,
+          { tenantId:recepientId }
+        );
+        console.log("rep id ----- "+recepientId); // Log the response for now
+        Alert.alert("Add successfully");
+  
+        // Handle response
+        console.log(response.data); // Log the response for now
+      } catch (error) {
+        console.error(error);
+        Alert.alert('Error', 'Failed to add tenant to boarding.');
+      }
+    }
+  };
 
   //------------------------------------------ testing -----------------------------------------
 
@@ -170,12 +199,10 @@ const ChatMessagesScreen = () => {
           )}
         </View>
       ),
-      headerRight: () =>
-        selectedMessages.length > 0 ? (
+      headerRight: () =>(
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+        {selectedMessages.length > 0 ? (
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <Ionicons name="md-arrow-redo-sharp" size={24} color="black" />
-            <Ionicons name="md-arrow-undo" size={24} color="black" />
-            <FontAwesome name="star" size={24} color="black" />
             <MaterialIcons
               onPress={() => deleteMessages(selectedMessages)}
               name="delete"
@@ -183,9 +210,34 @@ const ChatMessagesScreen = () => {
               color="black"
             />
           </View>
-        ) : null,
+        ) : userRole === "tenant" ? (
+          <View></View>
+         
+        ): userRole === "landlord" ?( 
+
+          <Pressable
+            onPress={() => addTenant()}
+            style={{
+              backgroundColor: "#1DAB87",
+              paddingVertical: 12,
+              paddingHorizontal: 20,
+              borderRadius: 20,
+              gap: 7,
+              marginHorizontal: 8,
+              height: 40,
+              width:100,
+              
+            }}
+          >
+            <Text style={{ color: "white", fontWeight: "bold" }}>Add Tenant</Text>
+          </Pressable>
+        ):null
+      }
+           </View>
+        ),
     });
   }, [recepientData, selectedMessages]);
+
 
   const deleteMessages = async (messageIds) => {
     try {
@@ -435,6 +487,7 @@ const ChatMessagesScreen = () => {
         >
           <Text style={{ color: "white", fontWeight: "bold" }}>Send</Text>
         </Pressable>
+       
       </View>
 
       {showEmojiSelector && (

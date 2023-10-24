@@ -6,37 +6,62 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  email: {
+  username: {
     type: String,
     required: true,
     unique: true,
+  },
+  email: {
+    type: String,
+   
   },
   password: {
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+  },
+  nic: {
+    type: String,
+   
+  },
+  phoneNum: {
+    type: String,
+    
+  },
   image: {
     type: String,
     // required: true,
   },
-  // freindRequests: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "User",
-  //   },
-  // ],
   friends: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
   ],
+  role:{
+    type: String,
+  },
+  myboarding:{
+    type: Schema.Types.ObjectId,
+    ref: "Boarding",
+    required: false,
+  }
+  
+});
+
+module.exports = mongoose.model("User", userSchema);
+
+// freindRequests: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "User",
+  //   },
+  // ],
   // sentFriendRequests: [
   //   {
   //     type: Schema.Types.ObjectId,
   //     ref: "User",
   //   },
   // ],
-});
-
-module.exports = mongoose.model("User", userSchema);

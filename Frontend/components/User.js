@@ -116,7 +116,7 @@ const User = ({ item }) => {
 
       <View style={{ marginLeft: 12, flex: 1 }}>
         <Text style={{ fontWeight: "bold" }}>{item?.name}</Text>
-        <Text style={{ marginTop: 4, color: "gray" }}>{item?.email}</Text>
+        <Text style={{ marginTop: 4, color: "gray" }}>{item?.username}</Text>
       </View>
 
       {/* {userFriends.includes(item._id) ? (

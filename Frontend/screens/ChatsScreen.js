@@ -26,7 +26,7 @@ const ChatsScreen = () => {
     };
 
     acceptedFriendsList();
-  }, []);
+  }, [acceptedFriends]);
   //console.log("friends",acceptedFriends)
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:"#ffffff"}}>

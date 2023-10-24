@@ -1,23 +1,30 @@
 const User = require("../models/user");
 const Message = require("../models/message");
+const Boarding = require('../models/landlord-boardings'); 
 
 const jwt = require("jsonwebtoken");
 
 // --------- registration of the user --------- //
 const registerUser = async (req, res) => {
-  const { name, email, password, image } = req.body;
+  const { name, username, password, image, role } = req.body;
 
   // create a new User object
   const newUser = new User({
     name,
-    email,
+    username,
+    email:'',
     password,
+    gender:'', 
+    nic:'', 
+    phoneNum:'',
     image,
+    role
   });
+
 
   try {
     await newUser.save();
-  } catch (error) {
+  } catch (err) {
     console.log("Error registering user", err);
     res.status(500).json({ message: "Error registering the user!" });
   }
@@ -41,18 +48,18 @@ const createToken = (userId) => {
 
 // --------- logging in of that particular user --------- //
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   let user;
 
-  //check if the email and password are provided
-  if (!email || !password) {
+  //check if the username and password are provided
+  if (!username || !password) {
     return res
       .status(404)
-      .json({ message: "Email and the password are required" });
+      .json({ message: "username and the password are required" });
   }
 
   try {
-    user = await User.findOne({ email });
+    user = await User.findOne({ username });
   } catch (error) {
     console.log("error in finding the user", error);
     res.status(500).json({ message: "Internal server Error!" });
@@ -61,7 +68,8 @@ const login = async (req, res) => {
     return res.status(404).json({ message: "Invalid Password!" });
   } else {
     const token = createToken(user._id);
-    res.status(200).json({ token });
+    const u_role = user.role;
+    res.status(200).json({ token, u_role });
   }
 };
 
@@ -79,7 +87,153 @@ const alllogedinUsers = async (req, res) => {
       });
   };
 
-  //endpoint to send a request to a user
+  //endpoint to accept a friend-request of a particular person
+const acceptFriendReq = async (req, res) => {
+    try {
+      const { senderId, recepientId } = req.body;
+  
+      //retrieve the documents of sender and the recipient
+      const sender = await User.findById(senderId);
+      const recepient = await User.findById(recepientId);
+
+      if(!recepient.friends.includes(senderId)){
+
+       
+        sender.friends.push(recepientId);
+        recepient.friends.push(senderId);
+
+        await sender.save();
+        await recepient.save();
+        res.status(200).json({ message: "Friend Request accepted successfully" });
+
+      }
+      else{
+        res.status(200).json({ message: "You allready have a chat with this user" });
+
+      }
+  
+    
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+  //endpoint to access all the friends of the logged in user!
+const allFriends = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const user = await User.findById(userId).populate(
+        "friends",
+        "name  image"
+      );
+      const acceptedFriends = user.friends;
+      res.json(acceptedFriends);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+  
+
+  ///endpoint to get the userDetails to design the chat Room header
+const getUserdetails = async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      //fetch the user data from the user ID
+      const recepientId = await User.findById(userId);
+  
+      res.json(recepientId);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
+  const updateUser = async (req, res) => {
+    const { userId } = req.params; // Assuming userId is passed as a parameter
+  
+    // Assuming the User model is defined somewhere in your code
+    try {
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      const { name, email, gender, nic, phoneNum, image } = req.body;
+  
+      // Update the user object with the new values
+      user.name = name 
+      user.email = email 
+      user.gender = gender 
+      user.nic = nic 
+      user.phoneNum = phoneNum 
+      user.image = image 
+    
+  
+      await user.save();
+  
+      res.status(200).json({ user: user, message: "User updated successfully" });
+    } catch (err) {
+      console.log("Error updating user", err);
+      res.status(500).json({ message: "Error updating the user!" });
+    }
+  };
+  
+
+  const updateUserboarding = async (req, res) => {
+    const { userId, boardingId } = req.params; // Assuming userId is passed as a parameter
+  
+    // Assuming the User model is defined somewhere in your code
+    try {
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      // Update the user object with the new values
+      user.myboarding = null
+      await user.save();
+
+      try {
+        if (!boardingId) {
+          return res.status(404).json({ error: 'Boarding not found' });
+        }
+        const result = await Boarding.updateOne(
+          { _id: boardingId },
+          { $pull: { tenants: userId } }
+        );
+        console.log(result);
+      } catch (error) {
+        console.log(error)
+      }
+      
+  
+      res.status(200).json({ user: user, message: "boarding updated successfully" });
+    } catch (err) {
+      console.log("Error updating user", err);
+      res.status(500).json({ message: "Error updating the boarding!" });
+    }
+  };
+
+  
+
+module.exports = {
+  registerUser,
+  login,
+  updateUser,
+  alllogedinUsers,
+  acceptFriendReq,
+  allFriends,
+  getUserdetails,
+  updateUserboarding,
+};
+
+
+//endpoint to send a request to a user
 // const sendreq = async (req, res) => {
 //     const { currentUserId, selectedUserId } = req.body;
   
@@ -120,128 +274,10 @@ const alllogedinUsers = async (req, res) => {
 
 //-------------#########################----------------------------------
 
-  //endpoint to accept a friend-request of a particular person
-const acceptFriendReq = async (req, res) => {
-    try {
-      const { senderId, recepientId } = req.body;
-  
-      //retrieve the documents of sender and the recipient
-      const sender = await User.findById(senderId);
-      const recepient = await User.findById(recepientId);
-
-      if(!recepient.friends.includes(senderId)){
-
-        sender.friends.push(recepientId);
-        recepient.friends.push(senderId);
-
-        await sender.save();
-        await recepient.save();
-        res.status(200).json({ message: "Friend Request accepted successfully" });
-
-      }
-      else{
-        res.status(200).json({ message: "You allready have a chat with this user" });
-
-      }
-  
-      
-  
-      // recepient.freindRequests = recepient.freindRequests.filter(
+ // recepient.freindRequests = recepient.freindRequests.filter(
       //   (request) => request.toString() !== senderId.toString()
       // );
   
       // sender.sentFriendRequests = sender.sentFriendRequests.filter(
       //   (request) => request.toString() !== recepientId.toString
       // );
-  
-      
-
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
-  };
-
-  //endpoint to access all the friends of the logged in user!
-const allFriends = async (req, res) => {
-    try {
-      const { userId } = req.params;
-      const user = await User.findById(userId).populate(
-        "friends",
-        "name email image"
-      );
-      const acceptedFriends = user.friends;
-      res.json(acceptedFriends);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
-
-  
-
-  ///endpoint to get the userDetails to design the chat Room header
-const getUserdetails = async (req, res) => {
-    try {
-      const { userId } = req.params;
-  
-      //fetch the user data from the user ID
-      const recepientId = await User.findById(userId);
-  
-      res.json(recepientId);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  };
-  
-  
-
-  // const friend_requests_sent = async(req,res) => {
-  //   try{
-  //     const {userId} = req.params;
-  //     const user = await User.findById(userId).populate("sentFriendRequests","name email image").lean();
-  
-  //     const sentFriendRequests = user.sentFriendRequests;
-  
-  //     res.json(sentFriendRequests);
-  //   } catch(error){
-  //     console.log("error",error);
-  //     res.status(500).json({ error: "Internal Server" });
-  //   }
-  // }
-  
-  // const friends_uaserid = (req,res) => {
-  //   try{
-  //     const {userId} = req.params;
-  
-  //     User.findById(userId).populate("friends").then((user) => {
-  //       if(!user){
-  //         return res.status(404).json({message: "User not found"})
-  //       }
-  
-  //       const friendIds = user.friends.map((friend) => friend._id);
-  
-  //       res.status(200).json(friendIds);
-  //     })
-  //   } catch(error){
-  //     console.log("error",error);
-  //     res.status(500).json({message:"internal server error"})
-  //   }
-  // }
-
-module.exports = {
-  registerUser,
-  login,
-  alllogedinUsers,
-  // sendreq,
-  // allFriendreq,
-  acceptFriendReq,
-  allFriends,
-  // postmessage,
-  getUserdetails,
-  // getMessages,
-  // deleteMessage,
-  // friend_requests_sent,
-  // friends_uaserid
-};
