@@ -20,7 +20,7 @@ const FriendsScreen = () => {
         const friendRequestsData = response.data.map((friendRequest) => ({
           _id: friendRequest._id,
           name: friendRequest.name,
-          email: friendRequest.email,
+          username: friendRequest.username,
           image: friendRequest.image,
         }));
 

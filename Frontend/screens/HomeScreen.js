@@ -10,7 +10,7 @@ import axios from "axios";
 import User from "../components/User";
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const { userId, setUserId } = useContext(UserType);
+  const { userId, setUserId,userRole,setUserRole } = useContext(UserType);
   const [users, setUsers] = useState([]);
   // useLayoutEffect(() => {
   //   navigation.setOptions({
@@ -35,9 +35,13 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const token = await AsyncStorage.getItem("authToken");
+      const role = await AsyncStorage.getItem("urole");
+
       const decodedToken = jwt_decode(token);
       const userId = decodedToken.userId;
       setUserId(userId);
+      setUserRole(role);
+      console.log("user role ----- ", userRole);
 
       axios
         .get(`http://192.168.1.13:8000/api/user/users/${userId}`)
@@ -46,6 +50,7 @@ const HomeScreen = () => {
         })
         .catch((error) => {
           console.log("error retrieving users", error);
+
         });
     };
 
