@@ -20,6 +20,7 @@ import ViewBoarding from "../screens/View_LL_Boarding";
 import MakePayment from "../screens/Make_Payment";
 import CardDetails from "../screens/LL_Card_Details";
 import EditAccountInfo from "../screens/EditAccountInfo";
+import MyFeedbacks from "../screens/MyFeedbacks";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -168,6 +169,11 @@ function TabNavigatorLandlord() {
           component={EditAccountInfo}
           options={{ title: "Edit Account Info",presentation: "modal" }}
         />
+        <Stack.Screen
+        name="Tenant_MyFeedbacks"
+        component={MyFeedbacks}
+        options={{ title: "My Feedbacks"}}
+      />
       </Stack.Navigator>
     );
   }

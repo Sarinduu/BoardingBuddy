@@ -7,6 +7,19 @@ const addNewBoarding = async (req, res) => {
     const { boardingLocation, gender, price, description, image,userId } = req.body;
     const boarding = new Boarding({ boardingLocation, gender, price, description, image ,userId});
     const savedBoarding = await boarding.save();
+
+    try {
+      const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'user not found' });
+    }
+    user.ownboardings.push(savedBoarding._id);
+    await user.save();
+    
+    } catch (error) {
+      console.log(error)
+    }
+
     res.status(201).json(savedBoarding);
   } catch (err) {
     res.status(500).json({ error: err.message });

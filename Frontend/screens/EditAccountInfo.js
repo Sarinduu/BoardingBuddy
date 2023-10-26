@@ -6,9 +6,13 @@ import {
   TextInput,
   Modal,
   Alert,
+  Platform,
+  Keyboard,
   Button,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
 } from "react-native";
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -143,8 +147,38 @@ const EditAccountInfo = () => {
     }
   };
 
+  //if kayboard comes, image picker hides
+  const [keyboardIsVisible, setKeyboardIsVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardIsVisible(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardIsVisible(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+    behavior={'padding'}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 450 : 0}
+    style={styles.container}
+    >
+
+       {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
       {uploading && <Spinner />}
 
       {/* --------- popup box for image upload----------- */}
@@ -175,7 +209,8 @@ const EditAccountInfo = () => {
         </View>
       </Modal>
 
-      <Image
+      {!keyboardIsVisible && (<View>
+        <Image
         style={{
           marginTop: 30,
           width: 100,
@@ -188,6 +223,9 @@ const EditAccountInfo = () => {
         source={{ uri: imgURL }}
       />
       <Button title="Pick Image" onPress={pickImage} />
+      </View>)}
+      
+
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Name</Text>
         <TextInput
@@ -197,6 +235,7 @@ const EditAccountInfo = () => {
           onChangeText={setName}
         />
       </View>
+
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Email</Text>
         <TextInput
@@ -247,7 +286,8 @@ const EditAccountInfo = () => {
       <TouchableOpacity style={styles.editButton} onPress={updateUser}>
         <Text style={styles.editButtonText}>Save</Text>
       </TouchableOpacity>
-    </View>
+      {/* </TouchableWithoutFeedback> */}
+    </KeyboardAvoidingView>
   );
 };
 
@@ -255,7 +295,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    padding: 16,
+    //padding: 16,
   },
   input: {
     width: 300,

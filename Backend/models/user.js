@@ -47,7 +47,11 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Boarding",
     required: false,
-  }
+  },
+  ownboardings:[{
+    type: Schema.Types.ObjectId,
+    ref: "Boarding",
+  }]
   
 });
 

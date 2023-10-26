@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // --------- registration of the user --------- //
 const registerUser = async (req, res) => {
   const { name, username, password, image, role } = req.body;
-
+  let user;
   // create a new User object
   const newUser = new User({
     name,
@@ -21,16 +21,26 @@ const registerUser = async (req, res) => {
     role
   });
 
+  user = await User.findOne({ username });
+  
 
-  try {
-    await newUser.save();
-  } catch (err) {
-    console.log("Error registering user", err);
-    res.status(500).json({ message: "Error registering the user!" });
+  if (user) {
+    
+
+    res.status(404).json({ message: "username alredy used" });
+  } else {
+
+    try {
+      await newUser.save();
+    } catch (err) {
+      console.log("Error registering user", err);
+      res.status(500).json({ message: "Error registering the user!" });
+    }
+  
+    //res.status(200).json({ message: "User registered successfully" });
+    res.status(201).json({ user: newUser });
   }
-
-  //res.status(200).json({ message: "User registered successfully" });
-  res.status(201).json({ user: newUser });
+  
 };
 
 // --------- create a token for the user --------- //
@@ -60,6 +70,10 @@ const login = async (req, res) => {
 
   try {
     user = await User.findOne({ username });
+    if(!user){
+      return res.status(404).json({ message: "Invalid username!" });
+
+    }
   } catch (error) {
     console.log("error in finding the user", error);
     res.status(500).json({ message: "Internal server Error!" });
@@ -219,6 +233,43 @@ const getUserdetails = async (req, res) => {
     }
   };
 
+  const deleteUser = async (req, res) => {
+    const { userId } = req.params;
+    console.log("user -- ", userId);
+    try {
+        const user = await User.findByIdAndDelete(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: 'Server error: ' + error.message });
+    }
+};
+
+const getUserBoardings = async (req, res) => {
+  const { userId } = req.params;
+  try {
+      const user = await User.findById(userId).populate('ownboardings', 'boardingLocation');
+
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      const ownBoardings = user.ownboardings.map(boarding => {
+          return {
+              id: boarding._id,
+              name: boarding.boardingLocation
+          };
+      });
+
+      res.status(200).json(ownBoardings);
+  } catch (error) {
+      res.status(500).json({ error: 'Server error: ' + error.message });
+  }
+};
+
   
 
 module.exports = {
@@ -230,6 +281,8 @@ module.exports = {
   allFriends,
   getUserdetails,
   updateUserboarding,
+  deleteUser,
+  getUserBoardings,
 };
 
 
