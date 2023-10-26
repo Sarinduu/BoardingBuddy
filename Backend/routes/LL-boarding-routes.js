@@ -11,6 +11,7 @@ router.get('/boardings/:id', boardingsController.viewBoarding);
 router.put('/boardings/:id', boardingsController.updateBoarding);
 router.put('/boardings/:boardingId/addtenant', boardingsController.addTenantToBoarding);
 
+router.post('/boardings/:id', boardingsController.updateBoardingImage);
 
 
 // Delete a boarding by ID

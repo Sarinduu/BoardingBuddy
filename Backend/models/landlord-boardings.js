@@ -17,18 +17,14 @@ const boardingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String,
-    required: true,
-  },
   userId:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Replace 'User' with the actual name of the user model if different
+    ref: 'User' 
   },
-  tenants: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Replace 'User' with the actual name of the user model if different
-  }]
+  image:{
+    type:String,
+    required:true
+  }
 });
 
 module.exports = mongoose.model('Boarding', boardingSchema);
