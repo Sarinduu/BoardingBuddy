@@ -1,9 +1,13 @@
 import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Alert, Image } from "react-native";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { UserType } from "../UserContext";
+
+import * as ImagePicker from 'expo-image-picker';
+import {firebase} from '../config';
+import * as FileSystem from 'expo-file-system';
 
 const LL_boardings = () => {
   const { userId, setUserId } = useContext(UserType);
@@ -13,9 +17,59 @@ const LL_boardings = () => {
   const [gender, setGender] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
+  const [imgURL, setImgURL] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const pickImage = async() => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const uploadImage = async() => {
+    setUploading(true);
+    try {
+      const { uri } = await FileSystem.getInfoAsync(image);
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+          resolve(xhr.response);
+        };
+        xhr.onerror = (e) => {
+          reject(new TypeError('Network request failed'));
+        };
+        xhr.responseType = 'blob';
+        xhr.open('GET', uri, true);
+        xhr.send(null);
+      });
+
+      const filename = image.substring(image.lastIndexOf('/') + 1);
+      const ref = firebase.storage().ref().child(filename);
+
+      await ref.put(blob);
+      const url = await ref.getDownloadURL();
+    
+      setImgURL(url);
+          console.log("image url ---------- " + url);
+
+      setUploading(false);
+      Alert.alert('Photo Uploaded !!');
+      setImage(null);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const handleAddBoarding = async () => {
+    console.log("url",imgURL);
     try {
       const response = await axios.post(
         "http://192.168.1.13:8000/api/boardings",
@@ -23,9 +77,9 @@ const LL_boardings = () => {
           boardingLocation,
           gender,
           price,
-          description,
-          image,
+          description,        
           userId,
+          image:imgURL
         }
       );
 
@@ -38,6 +92,22 @@ const LL_boardings = () => {
 
   const handleBackPress = () => {
     navigation.goBack();
+  };
+
+  const UpdateImage = async () => {
+    try {
+        console.log("here")
+        console.log(imgURL)
+      const response = await axios.post(`http://192.168.1.13:8000/api/boardings/${userId}`, {imgURL: imgURL});
+
+      console.log("there")
+      if (response.status === 200) {
+        const updatedBoarding = response.data;
+        alert(' Image added Successfully!');
+      }
+    } catch (error) {
+      setErrorMessage('An error occurred');
+    }
   };
 
   return (
@@ -54,7 +124,7 @@ const LL_boardings = () => {
         onChangeText={(text) => setBoardingLocation(text)}
       />
 
-      <Text style={styles.text}>Gender</Text>
+     
       <Text style={styles.text2}>Gender</Text>
       <View style={styles.radioButtons}>
         <TouchableOpacity
@@ -102,16 +172,23 @@ const LL_boardings = () => {
         onChangeText={(text) => setDescription(text)}
       />
 
-      <Text style={styles.text}>Image</Text>
-      <TextInput
-        style={styles.inputField}
-        placeholder="Image URL"
-        value={image}
-        onChangeText={(text) => setImage(text)}
-      />
+      
+        <TouchableOpacity style={styles.selectButton} onPress={pickImage}>
+          <Text style={styles.buttonText}>Pick an Image</Text>
+        </TouchableOpacity>
+        <View style={styles.imamgeContainer}>
+          {image && <Image 
+            source={{uri:image}}
+            style={{width:300 , height:300}}
+          />}
+          <TouchableOpacity style={styles.uploadButton} onPress={uploadImage}>
+            <Text style={styles.buttonText}>Upload Image</Text>
+          </TouchableOpacity>
+        </View>
+     
 
       <TouchableOpacity style={styles.button} onPress={handleAddBoarding}>
-        <Text style={styles.buttonText}>Add Boarding</Text>
+        <Text style={styles.submitButtonText}>Add Boarding</Text>
       </TouchableOpacity>
     </View>
   );
@@ -143,8 +220,8 @@ const styles = StyleSheet.create({
   backwardIcon: {
     position: "absolute",
     top: -20,
-    right:10,
-    marginRight:200
+    right: 10,
+    marginRight: 200,
   },
   inputField: {
     width: 300,
@@ -158,11 +235,18 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#4BC56A",
     padding: 10,
+    marginBottom:-50,
+    marginTop:10,
     borderRadius: 5,
+    width:350,
+    alignItems:'center',
+    height:50,
+    justifyContent:'center'
   },
-  buttonText: {
-    color: "white",
+  submitButtonText: {
+    color: "black",
     fontWeight: "bold",
+    fontSize:24
   },
   radioButtons: {
     flexDirection: "row",
@@ -183,6 +267,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#4BC56A",
     borderColor: "#4BC56A",
   },
+  selectButton:{
+    borderRadius:5,
+    width:120,
+    height:50,
+    marginBottom:10,
+    backgroundColor:'blue',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+    buttonText:{
+      color:'#fff',
+      fontSize:18,
+      fontWeight:'bold'
+    },
+    uploadButton:{
+      borderRadius:5,
+      width:120,
+      height:50,
+      marginBottom:10,
+      backgroundColor:'#4BC56A',
+      alignItems:'center',
+      justifyContent:'center',
+      marginTop:20
+    }
+  
 });
 
 export default LL_boardings;
