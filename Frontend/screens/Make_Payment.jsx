@@ -17,7 +17,7 @@ const MakePayment = () => {
 
     const handleDeleteCard = (cardId) => {
         // Send a DELETE request to the server to delete the card
-        fetch(`http://192.168.1.13:8000/cards/${cardId}`, {
+        fetch(`http://192.168.1.5:8000/cards/${cardId}`, {
             method: 'DELETE',
         })
             .then((response) => {
@@ -37,7 +37,7 @@ const MakePayment = () => {
 
     const handlePayment = () => {
         if (selectedCard) {
-            const paymentUrl = 'http://192.168.1.13:8000/api/payments';
+            const paymentUrl = 'http://192.168.1.5:8000/api/payments';
             const paymentData = {
                 card: selectedCard,
                 cardNumber: selectedCard.cardNumber,
@@ -61,7 +61,7 @@ const MakePayment = () => {
     };
 
     const fetchCards = () => {
-        const apiUrl = 'http://192.168.1.13:8000/api/cards';
+        const apiUrl = 'http://192.168.1.5:8000/api/cards';
         fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {

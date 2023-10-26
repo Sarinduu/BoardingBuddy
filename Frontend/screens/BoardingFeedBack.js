@@ -1,26 +1,30 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, FlatList} from 'react-native';
+import { View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, FlatList, Image} from 'react-native';
 import { UserType } from "../UserContext";
 import { useRoute } from '@react-navigation/native';
+
 
 const BoardingFeedBack = () => {
   const route = useRoute();
   const [isModalVisible, setModalVisible] = useState(false);
   const { userId } = useContext(UserType);
   const [userName, setUserName] = useState('');
+  // const [userImage, setUserImage] = useState('');
   const [text, setText] = useState('');
   const [comments, setComments] = useState([]);
   const { boardingId } = route.params;
+  
 
   useEffect(() => {
     // Fetch user details when the component mounts
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/user/user/${userId}`);
+        const response = await fetch(`http://192.168.1.5:8000/api/user/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
-          setUserName(data.name); // Update userName state with the retrieved name
+          setUserName(data.name);
+          // setUserImage(data.image); // Update userName state with the retrieved name
         } else {
           console.log("Error fetching user details", response.status);
         }
@@ -35,7 +39,7 @@ const BoardingFeedBack = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://192.168.1.13:8000/api/comments/boardings/${boardingId}/comments`);
+      const response = await fetch(`http://192.168.1.5:8000/api/comments/boardings/${boardingId}/comments`);
       const data = await response.json();
       if (response.ok) {
         setComments(data); // Update comments state with the retrieved comments
@@ -64,7 +68,7 @@ const BoardingFeedBack = () => {
       };
 
       // Send a POST request to create the comment in the backend
-      const response = await fetch(`http://192.168.1.13:8000/api/comments/boardings/${boardingId}/comments`, {
+      const response = await fetch(`http://192.168.1.5:8000/api/comments/boardings/${boardingId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,10 +104,21 @@ const BoardingFeedBack = () => {
       <FlatList
         data={comments}
         renderItem={({ item }) => (
+          
           <View style={styles.commentContainer}>
+            
           <View style={styles.commentItem}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          
+          <Image
+        style={{ width: 50, height: 50, borderRadius: 25, resizeMode: "cover", marginRight: 10 }}
+        source={{ uri: item.userimage}}
+      />
+           
           <Text style={{ fontWeight: 'bold' }}>{item.name}: </Text>
             <Text style={{ flexWrap: 'wrap', maxWidth: '100%', }}>{item.text} </Text>
+            
+          </View>
           </View>
           </View>
         )}

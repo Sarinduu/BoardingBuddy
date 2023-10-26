@@ -32,7 +32,7 @@ const Profile = () => {
   const fetchRecepientData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.13:8000/api/user/user/${userId}`
+        `http://192.168.1.5:8000/api/user/user/${userId}`
       );
 
       const data = await response.json();

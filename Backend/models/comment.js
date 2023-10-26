@@ -18,6 +18,11 @@ const commentSchema = new mongoose.Schema({
     ref: 'Boarding',
     required: true,
   },
+  userimage:{
+    type:String,
+    
+  },
+ 
   // You can add more fields like date, likes, etc. as needed
 });
 

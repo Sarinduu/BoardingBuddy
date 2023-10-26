@@ -95,7 +95,7 @@ const EditAccountInfo = () => {
   //   const fetchRecepientData = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://192.168.1.13:8000/api/user/user/${uid}`
+  //         `http://192.168.1.5:8000/api/user/user/${uid}`
   //       );
 
   //       const data = await response.json();
@@ -119,7 +119,7 @@ const EditAccountInfo = () => {
   const updateUser = async () => {
     try {
       const response = await axios.put(
-        `http://192.168.1.13:8000/api/user/upuser/${recepientinfo._id}`,
+        `http://192.168.1.5:8000/api/user/upuser/${recepientinfo._id}`,
         {
           name,
           email,

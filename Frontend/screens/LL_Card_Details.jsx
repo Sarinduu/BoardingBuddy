@@ -34,7 +34,7 @@ const CardDetails = () => {
 
   const handleAddCard = async () => {
     try {
-      const response = await axios.post('http://192.168.1.13:8000/api/cards', {
+      const response = await axios.post('http://192.168.1.5:8000/api/cards', {
         email,
         cardHolderName,
         cardNumber,

@@ -17,7 +17,7 @@ const MyBoarding = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://192.168.1.5:8000/api/boardings/${boarding}`);
         console.log("Viewid", boarding)
         if (!response.ok) {
           throw new Error('Boarding not found');
@@ -42,7 +42,7 @@ const MyBoarding = () => {
 
   const updateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.13:8000/api/user/upboarding/${userId}/${boarding}`, {
+      const response = await axios.put(`http://192.168.1.5:8000/api/user/upboarding/${userId}/${boarding}`, {
       });
       console.log(response.data);
       Alert.alert("remove boarding successfully")
@@ -58,6 +58,10 @@ const MyBoarding = () => {
   const handleFeedbackPress = () => {
     // Pass boardingId as a parameter when navigating to the FeedBack component
     navigation.navigate("FeedBack", { boardingId: boarding });
+  };
+  const handletenants = () => {
+    // Pass boardingId as a parameter when navigating to the FeedBack component
+    navigation.navigate("Tenantinfo", { boardingId: boarding });
   };
 
   return (
@@ -80,6 +84,18 @@ const MyBoarding = () => {
             />
           </View>
           <Text style={styles.text2}>Give Review</Text>
+        </View>
+        <Ionicons style={styles.icon} name="chevron-forward-outline" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.row} onPress={() => handletenants()}>
+        <View style={styles.leftContent}>
+          <View style={styles.image2}>
+            <Image
+              source={require("../assets/tenants.png")} // Replace with your image source
+              style={{ width: 30, height: 30 }}
+            />
+          </View>
+          <Text style={styles.text2}>Other tenants</Text>
         </View>
         <Ionicons style={styles.icon} name="chevron-forward-outline" />
       </TouchableOpacity>

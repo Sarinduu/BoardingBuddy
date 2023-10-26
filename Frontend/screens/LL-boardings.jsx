@@ -18,7 +18,7 @@ const LL_boardings = () => {
   const handleAddBoarding = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.13:8000/api/boardings",
+        "http://192.168.1.5:8000/api/boardings",
         {
           boardingLocation,
           gender,
