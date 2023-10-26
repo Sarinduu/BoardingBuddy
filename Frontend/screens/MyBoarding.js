@@ -59,6 +59,10 @@ const MyBoarding = () => {
     // Pass boardingId as a parameter when navigating to the FeedBack component
     navigation.navigate("FeedBack", { boardingId: boarding });
   };
+  const handletenants = () => {
+    // Pass boardingId as a parameter when navigating to the FeedBack component
+    navigation.navigate("Tenantinfo", { boardingId: boarding });
+  };
 
   return (
     <View style={styles.container}>
@@ -80,6 +84,18 @@ const MyBoarding = () => {
             />
           </View>
           <Text style={styles.text2}>Give Review</Text>
+        </View>
+        <Ionicons style={styles.icon} name="chevron-forward-outline" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.row} onPress={() => handletenants()}>
+        <View style={styles.leftContent}>
+          <View style={styles.image2}>
+            <Image
+              source={require("../assets/tenants.png")} // Replace with your image source
+              style={{ width: 30, height: 30 }}
+            />
+          </View>
+          <Text style={styles.text2}>Other tenants</Text>
         </View>
         <Ionicons style={styles.icon} name="chevron-forward-outline" />
       </TouchableOpacity>

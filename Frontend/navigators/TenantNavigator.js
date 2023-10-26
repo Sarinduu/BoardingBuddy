@@ -17,6 +17,9 @@ import EditAccountInfo from "../screens/EditAccountInfo";
 import MyBoarding from "../screens/MyBoarding";
 import FeedBack from "../screens/FeedBack";
 import BoardingFeedBack from "../screens/BoardingFeedBack"
+import Tenantinfo from "../screens/Tenantinfo";
+import TenantProfile from "../screens/TenantProfile";
+
 import DeleteAccount from "../screens/DeleteAccount";
 import ChangePassword from "../screens/ChangePassword";
 import MyFeedbacks from "../screens/MyFeedbacks";
@@ -195,6 +198,17 @@ function BoardingTabNavigations() {
         component={FeedBack}
         options={{ title: "Give Review"}}
       />
+
+<Stack.Screen
+        name="Tenantinfo"
+        component={Tenantinfo}
+        options={{ title: "Tenant details"}}
+      />
+      <Stack.Screen
+        name="TenantProfile"
+        component={TenantProfile}
+        options={{ title: "Tenant details"}}
+        />
       <Stack.Screen
         name="DeleteAccount"
         component={DeleteAccount}

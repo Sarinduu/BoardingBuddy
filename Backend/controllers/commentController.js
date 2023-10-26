@@ -7,7 +7,9 @@ exports.createComment = async (req, res) => {
       text: req.body.text,
       name: req.body.name,
       userId: req.body.uid,
-      boarding: req.params.boardingId, // Assuming you pass the boarding ID in the URL
+      boarding: req.params.boardingId,
+      userimage:req.body.uimage, // Assuming you pass the boarding ID in the URL
+      
     });
     await comment.save();
     res.status(201).json(comment);

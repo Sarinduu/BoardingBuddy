@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, Image, FlatList,ScrollView} from 'react-native';
+import { View, Text, StyleSheet, Modal, TextInput, Button, TouchableOpacity, Image, FlatList,ScrollView,} from 'react-native';
 import { UserType } from "../UserContext";
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +14,7 @@ const FeedBack = () => {
   const [userName, setUserName] = useState('');
   const [text, setText] = useState('');
   const [comments, setComments] = useState([]);
+  const [userImage, setUserImage] = useState('');
   const { boardingId } = route.params;
   const navigation = useNavigation();
   const [editedName, setEditedName] = useState('');
@@ -33,7 +34,8 @@ const FeedBack = () => {
 
         if (response.ok) {
           
-          setUserName(data.name); // Update userName state with the retrieved name
+          setUserName(data.name);
+          setUserImage(data.image); // Update userName state with the retrieved name
         } else {
           console.log("Error fetching user details", response.status);
         }
@@ -135,11 +137,6 @@ const FeedBack = () => {
     }
   };
 
- 
-  
-
-  
-
   const handleSubmit = async () => {
     try {
       // Create a new comment object
@@ -148,6 +145,8 @@ const FeedBack = () => {
         name: userName,
         uid: userId,
         boardingId: boardingId,
+        uimage: userImage,
+        
       };
 
       // Send a POST request to create the comment in the backend
@@ -193,6 +192,7 @@ const FeedBack = () => {
       <View style={styles.commentItem}>
         <Text style={{ fontWeight: 'bold' }}>{item.name}: </Text>
         <Text style={{ flexWrap: 'wrap', maxWidth: '70%', }}>{item.text} </Text>
+        
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -255,6 +255,7 @@ const FeedBack = () => {
               onChangeText={(text) => setUserName(text)}
               style={styles.input}
             />
+            
             <TextInput
               placeholder="Review "
               value={text}
