@@ -4,8 +4,8 @@ const User = require("../models/user");
 
 const addNewBoarding = async (req, res) => {
   try {
-    const { boardingLocation, gender, price, description, image,userId } = req.body;
-    const boarding = new Boarding({ boardingLocation, gender, price, description, image ,userId});
+    const { boardingLocation, gender, price, description ,userId,image } = req.body;
+    const boarding = new Boarding({ boardingLocation, gender, price, description,userId,image});
     const savedBoarding = await boarding.save();
 
     try {
@@ -28,9 +28,9 @@ const addNewBoarding = async (req, res) => {
 
 const updateBoarding = async (req, res) => {
   try {
-    const { boardingLocation, gender, price, description, image } = req.body;
+    const { boardingLocation, gender, price, description  } = req.body;
     const { id } = req.params;
-    const updatedBoarding = await Boarding.findByIdAndUpdate(id, { boardingLocation, gender, price, description, image }, { new: true });
+    const updatedBoarding = await Boarding.findByIdAndUpdate(id, { boardingLocation, gender, price, description }, { new: true });
     res.json(updatedBoarding);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -116,6 +116,24 @@ const getBoardings = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
   };
+
+  const updateBoardingImage = async (req, res) => {
+    const { uid } = req.params;
+    const {imgURL} = req.body;
+    try {
+      const boarding = await Boarding.findOne({userId: uid});
+      if (!boarding) {
+        return res.status(404).json({ error: 'Boarding not found' });
+      }
+      boarding.imgURL = imgURL;
+  
+      await boarding.save();
+  
+      res.status(200).json(store);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
   
 
 module.exports = {
@@ -125,5 +143,6 @@ module.exports = {
   getByIDBoarding,
   getBoardings,
   viewBoarding,
-  addTenantToBoarding
+  addTenantToBoarding,
+  updateBoardingImage
 };
