@@ -25,7 +25,7 @@ const Update_LL_Boardings = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.5:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
         if (!response.ok) {
           throw new Error('Boarding not found');
         }
@@ -46,7 +46,7 @@ const Update_LL_Boardings = () => {
 
   const handleUpdateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.5:8000/api/update-boardings/${boarding}`, {
+      const response = await axios.put(`http://192.168.1.13:8000/api/update-boardings/${boarding}`, {
         boardingLocation,
         gender,
         price,

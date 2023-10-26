@@ -50,7 +50,7 @@ const Get_LL_boardings = () => {
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://192.168.1.5:8000/api/boardings/${boardingToDelete._id}`, {
+      const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boardingToDelete._id}`, {
         method: 'DELETE',
       });
 
@@ -83,7 +83,7 @@ const Get_LL_boardings = () => {
 
   const fetchBoardings = async () => {
     try {
-      const response = await fetch('http://192.168.1.5:8000/api/boardings');
+      const response = await fetch('http://192.168.1.13:8000/api/boardings');
       if (response.ok) {
         const data = await response.json();
         setBoardings(data);

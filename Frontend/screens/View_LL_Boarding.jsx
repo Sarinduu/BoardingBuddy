@@ -15,7 +15,7 @@ const ViewBoarding = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.5:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
         console.log("Viewid", boarding)
         if (!response.ok) {
           throw new Error('Boarding not found');
@@ -41,7 +41,7 @@ const ViewBoarding = () => {
   const acceptRequest = async (friendRequestId) => {
     try {
       const response = await fetch(
-        "http://192.168.1.5:8000/api/user/friend-request/accept",
+        "http://192.168.1.13:8000/api/user/friend-request/accept",
         {
           method: "POST",
           headers: {

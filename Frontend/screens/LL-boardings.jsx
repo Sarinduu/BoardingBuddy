@@ -72,7 +72,7 @@ const LL_boardings = () => {
     console.log("url",imgURL);
     try {
       const response = await axios.post(
-        "http://192.168.1.5:8000/api/boardings",
+        "http://192.168.1.13:8000/api/boardings",
         {
           boardingLocation,
           gender,
