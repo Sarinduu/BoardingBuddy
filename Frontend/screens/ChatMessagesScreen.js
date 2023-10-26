@@ -7,13 +7,17 @@ import {
   TextInput,
   Pressable,
   Image,
+  Modal,
   ImageBackground,
   Dimensions,
+  TouchableOpacity,
   Alert,
 } from "react-native";
 import React, { useState, useContext, useLayoutEffect, useEffect,useRef } from "react";
 import { Feather } from "@expo/vector-icons";
 import axios from 'axios';
+import DropDownPicker from 'react-native-dropdown-picker';
+
 
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -28,6 +32,7 @@ import * as ImagePicker from "expo-image-picker";
 const ChatMessagesScreen = () => {
 
   const { userId, setUserId,userRole,setUserRole } = useContext(UserType);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [showEmojiSelector, setShowEmojiSelector] = useState(false);
   const [selectedMessages, setSelectedMessages] = useState([]);
@@ -39,7 +44,10 @@ const ChatMessagesScreen = () => {
   const route = useRoute();
   const { recepientId } = route.params;
   const [message, setMessage] = useState("");
-  const boardingId = "652fd465ecc41770f2f531e5"
+  const [open, setOpen] = useState(false);
+  const [boarding, setBoarding] = useState(null);
+  const [items, setItems] = useState([]);
+  //const boardingId = "652fd465ecc41770f2f531e5"
 
   const scrollViewRef = useRef(null);
 
@@ -62,14 +70,19 @@ const ChatMessagesScreen = () => {
   };
 
   const addTenant = async () => {
-    console.log(recepientData?.myboarding +" == "+boardingId); // Log the response for now
+    console.log(recepientData?.myboarding +" == "+boarding); // Log the response for now
 
     if (recepientData?.myboarding) {
       Alert.alert("This tenant already in a boarding");
-    } else {
+    } 
+    else if(boarding == null){
+      Alert.alert("please select a boarding");
+
+    }
+         else {
       try {
         const response = await axios.put(
-          `http://192.168.1.5:8000/api/boardings/${boardingId}/addtenant`,
+          `http://192.168.1.13:8000/api/boardings/${boarding}/addtenant`,
           { tenantId:recepientId }
         );
         console.log("rep id ----- "+recepientId); // Log the response for now
@@ -216,7 +229,7 @@ const ChatMessagesScreen = () => {
         ): userRole === "landlord" ?( 
 
           <Pressable
-            onPress={() => addTenant()}
+            onPress={() => setModalVisible(true)}
             style={{
               backgroundColor: "#1DAB87",
               paddingVertical: 12,
@@ -294,12 +307,79 @@ const ChatMessagesScreen = () => {
       ]);
     }
   };
+
+  const fetchboardingdata = async () => {
+    try {
+        const response = await fetch(
+            `http://192.168.1.13:8000/api/user/getownboardings/${userId}`
+        );
+
+        const data = await response.json();
+
+        //setBardingData(data);
+        const formattedData = data.map(boarding => ({
+            label: boarding.name,
+            value: boarding.id
+        }));
+        setItems(formattedData);
+    } catch (error) {
+        console.log("error retrieving details", error);
+    }
+};
+
+useEffect(() => {
+    fetchboardingdata();
+}, []);
+
   return (
       <KeyboardAvoidingView
           behavior={'padding'}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}
           style={{ flex: 1, backgroundColor: "#F0F0F0"}}
           >
+
+<Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Add tenant to boarding</Text>
+
+            <DropDownPicker
+                open={open}
+                value={boarding}
+                items={items}
+                setOpen={setOpen}
+                setValue={setBoarding}
+                setItems={setItems}
+                style={styles.dropdown}
+                dropDownContainerStyle={styles.dropdownContainer}
+                textStyle={styles.textStyle}
+                placeholderTextColor="#a6a6a6"
+                placeholder="Type"
+            />
+            <View style={styles.buttonContainer}>
+              
+              <TouchableOpacity style={styles.button} onPress={() => addTenant()}>
+                <Text style={styles.buttonText}>Confirm</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.buttonText}>Close</Text>
+              </TouchableOpacity>
+
+            </View>
+          </View>
+        </View>
+      </Modal>
 
       <ScrollView ref={scrollViewRef} contentContainerStyle={{flexGrow:1}} onContentSizeChange={handleContentSizeChange} style={[styles.scrollview]}>
       
@@ -518,4 +598,55 @@ fixed: {
 },
 scrollview: {
  backgroundColor: 'transparent'
-}});
+},
+centeredView: {
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: 22,
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+},
+modalView: {
+  margin: 20,
+  backgroundColor: "white",
+  borderRadius: 20,
+  padding: 35,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 4,
+  elevation: 5,
+},
+modalText: {
+  marginBottom: 15,
+  textAlign: "center",
+  fontSize: 20,
+  fontWeight: "bold",
+  color: "#000000",
+},
+popupimage: {
+  width: 200,
+  height: 200,
+  marginBottom: 15,
+},
+buttonContainer: {
+  flexDirection: "row",
+  justifyContent: "space-evenly",
+  width: "90%",
+  marginTop: 20,
+},
+button: {
+  width: 100,
+  backgroundColor: "#1DAB87",
+  padding: 10,
+  alignItems: "center",
+  borderRadius: 5,
+},
+buttonText: {
+  color: "white",
+},
+});

@@ -119,7 +119,7 @@ const Profile = () => {
           </TouchableOpacity>
         ) : null}
 
-        <TouchableOpacity style={styles.row} onPress={() => handleRowClick(1)}>
+        <TouchableOpacity style={styles.row} onPress={() => {navigation.navigate('Tenant_MyFeedbacks')}}>
           <View style={styles.leftContent}>
             <View style={styles.image}>
               <Image
@@ -131,8 +131,10 @@ const Profile = () => {
           </View>
           <Ionicons style={styles.icon} name="chevron-forward-outline" />
         </TouchableOpacity>
+
         <View style={styles.line}></View>
-        <TouchableOpacity style={styles.row} onPress={() => handleRowClick(1)}>
+
+        <TouchableOpacity style={styles.row} onPress={() => {navigation.navigate('ChangePassword')}}>
           <View style={styles.leftContent}>
             <View style={styles.image}>
               <Image
@@ -145,7 +147,7 @@ const Profile = () => {
           <Ionicons style={styles.icon} name="chevron-forward-outline" />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.row} onPress={() => handleRowClick(1)}>
+        <TouchableOpacity style={styles.row} onPress={() => {navigation.navigate('DeleteAccount')}}>
           <View style={styles.leftContent}>
             <View style={styles.image}>
               <Image

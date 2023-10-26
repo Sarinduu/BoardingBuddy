@@ -20,6 +20,9 @@ import BoardingFeedBack from "../screens/BoardingFeedBack"
 import Tenantinfo from "../screens/Tenantinfo";
 import TenantProfile from "../screens/TenantProfile";
 
+import DeleteAccount from "../screens/DeleteAccount";
+import ChangePassword from "../screens/ChangePassword";
+import MyFeedbacks from "../screens/MyFeedbacks";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -205,6 +208,21 @@ function BoardingTabNavigations() {
         name="TenantProfile"
         component={TenantProfile}
         options={{ title: "Tenant details"}}
+        />
+      <Stack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
+        options={{ title: "Delete My Account"}}
+      />
+       <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{ title: "Change Password"}}
+      />
+       <Stack.Screen
+        name="Tenant_MyFeedbacks"
+        component={MyFeedbacks}
+        options={{ title: "My Feedbacks"}}
       />
       </Stack.Navigator>
     );
