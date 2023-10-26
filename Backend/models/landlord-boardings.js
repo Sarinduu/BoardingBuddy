@@ -24,7 +24,11 @@ const boardingSchema = new mongoose.Schema({
   image:{
     type:String,
     required:true
-  }
+  },
+  tenants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' // Replace 'User' with the actual name of the user model if different
+  }]
 });
 
 module.exports = mongoose.model('Boarding', boardingSchema);
