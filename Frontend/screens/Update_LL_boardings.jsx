@@ -6,6 +6,8 @@ import { useRoute, useNavigation } from '@react-navigation/native'; // Import us
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for the back button
 
 const Update_LL_Boardings = () => {
+  const route = useRoute();
+  const { boarding } = route.params;
   const [boardingLocation, setBoardingLocation] = useState('');
   const [gender, setGender] = useState('');
   const [price, setPrice] = useState('');
@@ -13,8 +15,7 @@ const Update_LL_Boardings = () => {
   const [image, setImage] = useState('');
   const [boardingData, setBoardingData] = useState(null);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
-  const route = useRoute();
-  const { boarding } = route.params;
+ 
 
   const navigation = useNavigation(); 
 
@@ -46,7 +47,7 @@ const Update_LL_Boardings = () => {
 
   const handleUpdateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.13:8000/api/update-boardings/${boarding}`, {
+      const response = await axios.put(`http://192.168.1.13:8000/api/boardings/${boarding}`, {
         boardingLocation,
         gender,
         price,

@@ -12,6 +12,10 @@ const ViewBoarding = () => {
   const { userId, userRole } = useContext(UserType);
 
 
+
+  
+
+
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
@@ -80,7 +84,7 @@ const ViewBoarding = () => {
         style={styles.backButton}
       /> */}
      
-      <Image source={{ uri: boardingg.image }} style={styles.image} />
+      <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
       <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
       <Text style={styles.text}>Gender: {boardingg.gender}</Text>
       <Text style={styles.text}>Price: ${boardingg.price}</Text>
@@ -113,6 +117,9 @@ const ViewBoarding = () => {
         </Pressable>
          
         ):null}
+
+        <Text>Tenants</Text>
+
      
 
      
@@ -128,7 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   image: {
-    marginTop:100,
+    marginTop:50,
     width: 300,
     height: 300,
     marginBottom: 10,

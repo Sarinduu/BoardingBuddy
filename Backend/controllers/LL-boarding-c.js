@@ -4,8 +4,8 @@ const User = require("../models/user");
 
 const addNewBoarding = async (req, res) => {
   try {
-    const { boardingLocation, gender, price, description ,userId,image } = req.body;
-    const boarding = new Boarding({ boardingLocation, gender, price, description,userId,image});
+    const { boardingLocation, gender, price, description ,userId,imgURL } = req.body;
+    const boarding = new Boarding({ boardingLocation, gender, price, description,userId,imgURL});
     const savedBoarding = await boarding.save();
 
     try {
