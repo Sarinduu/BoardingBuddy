@@ -72,7 +72,7 @@ const MyBoarding = () => {
   >
     <View style={styles.container}>
      
-      <Image source={{ uri: boardingg.image }} style={styles.image} />
+      <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
 
       
       {/* <Button title="Feedback" onPress={handleFeedbackPress} style={styles.allRequestsButton} /> */}
