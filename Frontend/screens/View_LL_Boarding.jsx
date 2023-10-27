@@ -12,6 +12,10 @@ const ViewBoarding = () => {
   const { userId, userRole } = useContext(UserType);
 
 
+
+  
+
+
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {

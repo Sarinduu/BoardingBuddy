@@ -14,12 +14,13 @@ const addNewCard = async (req, res) => {
   };
 
 // Delete a card by ID
-const deleteCard = async (req, res) => {
+const deleteCard= async (req, res) => {
   try {
-    await Card.findByIdAndRemove(req.params.id);
-    res.status(204).send();
+    const { id } = req.params;
+    await Card.findByIdAndRemove(id);
+    res.sendStatus(204);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 

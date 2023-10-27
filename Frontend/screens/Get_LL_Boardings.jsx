@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { UserType } from "../UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from "jwt-decode";
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const Get_LL_boardings = () => {
   const { userId, setUserId } = useContext(UserType);
@@ -97,7 +99,7 @@ const Get_LL_boardings = () => {
 
   const renderBoardingItem = ({ item }) => (
     <View style={styles.boardingItem}>
-      <Image source={{ uri: item.image }} style={styles.boardingImage} />
+      <Image source={{ uri: item.imgURL }} style={styles.boardingImage} />
       <ScrollView style={styles.boardingDetails}>
         <Text style={styles.boardingText}>Location: {item.boardingLocation}</Text>
         <Text style={styles.boardingText}>Gender: {item.gender}</Text>
@@ -117,6 +119,13 @@ const Get_LL_boardings = () => {
       </View>
     </View>
   );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchBoardings();
+    }, [])
+  );
+
 
   return (
     <View style={styles.container}>

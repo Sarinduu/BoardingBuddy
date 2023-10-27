@@ -14,8 +14,10 @@ const LL_boardings = () => {
 
   const navigation = useNavigation();
   const [boardingLocation, setBoardingLocation] = useState("");
+  const [boardingLocationError, setBoardingLocationError] = useState("");
   const [gender, setGender] = useState("");
   const [price, setPrice] = useState("");
+  const [priceError, setPriceError] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imgURL, setImgURL] = useState(null);
@@ -68,27 +70,49 @@ const LL_boardings = () => {
     }
   };
 
+  const validateForm = () => {
+    let valid = true;
+
+    if (boardingLocation.trim() === "") {
+      setBoardingLocationError("Boarding location is required");
+      valid = false;
+    } else {
+      setBoardingLocationError("");
+    }
+
+    if (price.trim() === "") {
+      setPriceError("Price is required");
+      valid = false;
+    } else {
+      setPriceError("");
+    }
+
+    return valid;
+  };
+
   const handleAddBoarding = async () => {
-    console.log("url",imgURL);
-    try {
-      const response = await axios.post(
-        "http://192.168.1.13:8000/api/boardings",
-        {
+    if (validateForm()) {
+      console.log("url", imgURL);
+      try {
+        
+  
+        console.log("Boardingdata",boardingLocation,gender)
+  
+        // Pass boarding details as route parameters when navigating to MakePayment
+        navigation.navigate("MakePayment", {
           boardingLocation,
           gender,
           price,
-          description,        
+          description,
           userId,
-          image:imgURL
-        }
-      );
-
-      console.log("Boarding added:", response.data);
-      navigation.navigate("MakePayment");
-    } catch (error) {
-      console.error("Error adding boarding:", error);
+          imgURL
+        });
+      } catch (error) {
+        console.error("Error adding boarding:", error);
+      }
     }
   };
+  
 
   const handleBackPress = () => {
     navigation.goBack();
@@ -113,7 +137,7 @@ const LL_boardings = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        
+         
       </View>
 
       <Text style={styles.text2}>Boarding Location</Text>
@@ -123,6 +147,9 @@ const LL_boardings = () => {
         value={boardingLocation}
         onChangeText={(text) => setBoardingLocation(text)}
       />
+      {boardingLocationError ? (
+        <Text style={styles.errorText}>{boardingLocationError}</Text>
+      ) : null}
 
      
       <Text style={styles.text2}>Gender</Text>
@@ -156,6 +183,7 @@ const LL_boardings = () => {
         </TouchableOpacity>
       </View>
 
+      
       <Text style={styles.text}>Price</Text>
       <TextInput
         style={styles.inputField}
@@ -163,6 +191,9 @@ const LL_boardings = () => {
         value={price}
         onChangeText={(text) => setPrice(text)}
       />
+      {priceError ? (
+        <Text style={styles.errorText}>{priceError}</Text>
+      ) : null}
 
       <Text style={styles.text}>Description</Text>
       <TextInput
@@ -203,6 +234,9 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: -230,
+  }, errorText: {
+    color: "red",
+    marginBottom: 10,
   },
   headerText: {
     fontSize: 24,

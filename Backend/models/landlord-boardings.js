@@ -21,7 +21,7 @@ const boardingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User' 
   },
-  image:{
+  imgURL:{
     type:String,
     required:true
   },

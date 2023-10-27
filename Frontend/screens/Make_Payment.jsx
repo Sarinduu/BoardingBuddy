@@ -1,13 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import axios from 'axios';
 
 const MakePayment = () => {
     const navigation = useNavigation();
+    const route = useRoute();
     const [selectedCard, setSelectedCard] = useState(null);
     const [cards, setCards] = useState([]);
     const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
+
+    const {
+        boardingLocation,
+        gender,
+        price,
+        description,
+        userId,
+        imgURL
+      } = route.params || {};
+
+
+      const handleAddBoarding = async () => {
+        console.log("uid",userId);
+
+        console.log('Adding Boarding:', boardingLocation, gender, price, description, imgURL);
+
+        
+          try {
+            const response = await axios.post(
+              "http://192.168.1.13:8000/api/boardings",
+              {
+                boardingLocation,
+                gender,
+                price,
+                description,
+                userId,
+                imgURL
+              }
+            );
+    
+            console.log("Boarding added:", response.data);
+          
+          } catch (error) {
+            console.error("Error adding boarding:", error);
+          
+        }
+      };   
 
     const handleCardSelection = (card) => {
         setSelectedCard((prevSelectedCard) =>
@@ -17,23 +56,26 @@ const MakePayment = () => {
 
     const handleDeleteCard = (cardId) => {
         // Send a DELETE request to the server to delete the card
-        fetch(`http://192.168.1.13:8000/cards/${cardId}`, {
+        console.log(cardId)
+        fetch(`http://192.168.1.13:8000/api/cards/${cardId}`, {
             method: 'DELETE',
         })
             .then((response) => {
                 if (response.status === 204) {
                     // Card deleted successfully
                     fetchCards(); // Refresh the card list after deletion
+                } else if (response.status === 404) {
+                    console.error('Error deleting card: Card not found');
                 } else {
-                    return response.json().then((data) => {
-                        console.error('Error deleting card:', data.error);
-                    });
+                    console.error('Error deleting card: ' + response.status + ' ' + response.statusText);
                 }
             })
             .catch((error) => {
                 console.error('Error deleting card:', error);
             });
     };
+    
+    
 
     const handlePayment = () => {
         if (selectedCard) {
@@ -53,6 +95,7 @@ const MakePayment = () => {
                 .then((data) => {
                     console.log('Payment Successful:', data);
                     setIsPaymentSuccessful(true);
+                    handleAddBoarding();
                 })
                 .catch((error) => {
                     console.error('Error processing payment:', error);
@@ -78,17 +121,18 @@ const MakePayment = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.headerContainer}>
+           <View style={styles.header}> 
                 <TouchableOpacity
                     onPress={() => navigation.goBack()} 
-                    style={styles.backButton}
+                   style={styles.backButton}
                 >
                     <FontAwesome name="arrow-left" size={24} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.header}>Make Payment</Text>
-            </View>
-            <View style={styles.headerContainer}>
-                <Text style={styles.header}>Cards</Text>
+                <Text style={styles.makePayment} >Make Payment</Text>
+                </View>
+            
+            <View style={styles.header2}>
+                <Text >Cards</Text>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('CardDetails')}
                     style={styles.plusButton}
@@ -109,7 +153,7 @@ const MakePayment = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => handleDeleteCard(card._id)}
-                        style={styles.deleteButton}
+                        style={styles}
                     >
                         <FontAwesome name="trash" size={20} color="red" />
                     </TouchableOpacity>
@@ -144,28 +188,41 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff',
-    },
-    headerContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
+    },   
     header: {
-        fontSize: 24,
-        padding: 10,
-    },
-    plusButton: {
-        marginLeft: 100,
-    },
-    backButton: {
-        marginRight: 80,
-        marginTop: -300,
-    },
-    cardContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        marginBottom: 100, 
+        marginTop:-200
+    },
+    header2:{
+        flexDirection:'row',
+        marginBottom:30,
+        backgroundColor:'lightgray',
+        width:320,
+        height:30,
+        paddingTop:5,
+        paddingLeft:10
+
+    },
+    makePayment:{
+        fontSize:22,
+        
+    },
+    plusButton: {
+        marginLeft: 230,
+    },
+    backButton: {
+       marginRight:100,
+       marginLeft:-100
+    },
+    cardContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginVertical: 10,
-        marginLeft: 20
+        marginLeft: 20,
+        width:250
     },
     radio: {
         width: 17,
@@ -173,9 +230,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         borderWidth: 2,
         borderColor: '#007BFF',
-        marginRight: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
+        
     },
     radioDot: {
         width: 12,
@@ -199,23 +254,33 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         padding: 20,
         borderRadius: 10,
+        width:300,
+        height:400
     },
     modalText: {
-        fontSize: 18,
+        paddingTop:70,
+        fontSize: 24,
         marginBottom: 10,
         textAlign: 'center',
     },
     makePaymentButton: {
         padding: 10,
         borderRadius: 5,
+        marginTop:50
     },
     makePaymentButtonText: {
         color: 'white',
         fontSize: 18,
+       
     },
     closeButtonText: {
         color: 'blue',
-        fontSize: 18,
+        fontSize: 20,
+        marginTop:150,
+        paddingLeft:100,
+        backgroundColor:'lightgray',
+        height:24,
+
     },
 });
 
