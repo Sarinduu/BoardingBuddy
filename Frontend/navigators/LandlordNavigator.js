@@ -21,6 +21,7 @@ import MakePayment from "../screens/Make_Payment";
 import CardDetails from "../screens/LL_Card_Details";
 import EditAccountInfo from "../screens/EditAccountInfo";
 import MyFeedbacks from "../screens/MyFeedbacks";
+import BoardingFeedBack from "../screens/BoardingFeedBack";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -127,6 +128,11 @@ function TabNavigatorLandlord() {
           component={ChatMessagesScreen}
           options={{ presentation: "modal" }}
         />
+        <Stack.Screen
+        name="BoardingFeedBack"
+        component={BoardingFeedBack}
+        options={{ title: "Boarding FeedBacks" }}
+      />
       </Stack.Navigator>
     );
   }
