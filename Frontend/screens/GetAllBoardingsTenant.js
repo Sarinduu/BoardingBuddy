@@ -97,7 +97,7 @@ const [priceQuery, setPriceQuery] = useState('');
 
   const renderBoardingItem = ({ item }) => (
     <Pressable style={styles.boardingItem} onPress={() => handleViewPress(item._id)}>
-      <Image source={{ uri: item.image }} style={styles.boardingImage} />
+      <Image source={{ uri: item.imgURL }} style={styles.boardingImage} />
       <View style={styles.boardingDetails}>
         <Text style={styles.boardingText}>{item.boardingLocation}</Text>
         <Text style={styles.boardingText}>For {item.gender}</Text>

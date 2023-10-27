@@ -88,7 +88,7 @@ const ViewBoarding = () => {
         style={styles.backButton}
       /> */}
      
-      <Image source={{ uri: boardingg.image }} style={styles.image} />
+      <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
      
 
 
