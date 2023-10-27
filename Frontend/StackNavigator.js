@@ -9,6 +9,7 @@ import HomeScreen from "./screens/HomeScreen";
 import FriendsScreen from "./screens/FriendsScreen";
 import ChatsScreen from "./screens/ChatsScreen";
 import ChatMessagesScreen from "./screens/ChatMessagesScreen";
+import CreateStoreForm from "./screens/Merchant/CreateStoreScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +18,8 @@ const StackNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
-          component={LoginScreen}
+          name="StoreRegistration"
+          component={CreateStoreForm}
           options={{ headerShown: false }}
         />
         <Stack.Screen

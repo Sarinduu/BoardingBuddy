@@ -61,7 +61,7 @@ const ChatMessagesScreen = () => {
   const fetchMessages = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.13:8000/api/user/messages/${userId}/${recepientId}`
+        `http://192.168.1.2:8000/api/user/messages/${userId}/${recepientId}`
       );
       const data = await response.json();
 
@@ -78,7 +78,7 @@ const ChatMessagesScreen = () => {
   const fetchRecepientData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.13:8000/api/user/user/${recepientId}`
+        `http://192.168.1.2:8000/api/user/user/${recepientId}`
       );
 
       const data = await response.json();
@@ -116,7 +116,7 @@ const ChatMessagesScreen = () => {
         formData.append("messageText", message);
       }
 
-      const response = await fetch("http://192.168.1.13:8000/api/user/messages", {
+      const response = await fetch("http://192.168.1.2:8000/api/user/messages", {
         method: "POST",
         body: formData,
       });
@@ -189,7 +189,7 @@ const ChatMessagesScreen = () => {
 
   const deleteMessages = async (messageIds) => {
     try {
-      const response = await fetch("http://192.168.1.13:8000/deleteMessages", {
+      const response = await fetch("http://192.168.1.2:8000/deleteMessages", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

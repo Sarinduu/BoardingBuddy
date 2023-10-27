@@ -11,8 +11,6 @@ export default function App() {
     <>
       <UserContext>
         <GgNavigator/>
-        {/* <TabNavigator/> */}
-        {/* <StackNavigator/> */}
       </UserContext>
     </>
   );

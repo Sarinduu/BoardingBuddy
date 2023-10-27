@@ -11,6 +11,17 @@ import HomeScreen from "./screens/HomeScreen";
 import FriendsScreen from "./screens/FriendsScreen";
 import ChatsScreen from "./screens/ChatsScreen";
 import ChatMessagesScreen from "./screens/ChatMessagesScreen";
+//merchant screens
+import CreateStoreForm from "./screens/Merchant/CreateStoreScreen";
+import AddItemToMenu from "./screens/Merchant/AddMenuItem";
+import merchantProfile from "./screens/Merchant/MerchantProfile";
+import Menu from "./screens/Merchant/Menu";
+import PremiumPage from "./screens/Merchant/PremiumPage";
+import PremiumIntroPage from "./screens/Merchant/PremiumIntroPage";
+import Store from "./screens/Merchant/Stores";
+import StoreDetails from "./screens/Merchant/StoreDetails";
+import StoreReviews from "./screens/Merchant/StoreReviews";
+import EditStoreImage from "./screens/Merchant/EditStoreProfileImage";
 
 import Boardings from "./screens/Boardings";
 import FoodPlaces from "./screens/FoodPlaces";
@@ -26,18 +37,18 @@ function StackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Login"
-        component={LoginScreen}
+        name="Home"
+        component={TabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Store"
+        component={Store}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Home"
-        component={TabNavigator}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -65,21 +76,10 @@ function TabNavigator() {
         paddingTop: 5,
       }}
     >
-      <Tab.Screen
-        name="Boardings"
-        component={StackNavigator1}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Image
-              source={require("./assets/house.png")}
-              style={{ width: 25, height: 25 }}
-            />
-          ),
-        }}
-      />
+      
       <Tab.Screen
         name="FoodPlaces"
-        component={StackNavigator2}
+        component={StoreStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Image
@@ -89,13 +89,13 @@ function TabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Chats"
-        component={StackNavigator3}
+    <Tab.Screen
+        name="Premium"
+        component={PremiumStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Image
-              source={require("./assets/chat.png")}
+              source={require("./assets/favorite.png")}
               style={{ width: 25, height: 25 }}
             />
           ),
@@ -103,7 +103,7 @@ function TabNavigator() {
       />
       <Tab.Screen
         name="Profile"
-        component={StackNavigator4}
+        component={MerchantStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Image
@@ -117,49 +117,83 @@ function TabNavigator() {
   );
 }
 
-function StackNavigator1() {
+function StoreStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Boarding_page"
-        component={HomeScreen}
-        options={{ title: "Boardings" }}
-      />
-      <Stack.Screen
-        name="Messages1"
-        component={ChatMessagesScreen}
-        options={{ presentation: "modal" }}
-      />
+          name="Stores"
+          component={Store}
+          options={{ title: "Stores" }}
+        />
+        <Stack.Screen
+          name="StoreDetails"
+          component={StoreDetails}
+          options={{ title: "StoreDetails" }}  
+        />
+        <Stack.Screen
+          name="StoreReviews"
+          component={StoreReviews}
+          options={{ title: "StoreReviews" }}
+          />
     </Stack.Navigator>
   );
 }
 
-function StackNavigator2() {
+function MerchantStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="FoodPlaces_page"
-        component={FoodPlaces}
-        options={{ title: "FoodPlaces" }}
-      />
+          name="merchantProfile"
+          component={merchantProfile}
+          options={{ title: "merchantProfile" }}
+        />
+         <Stack.Screen
+          name="Menu"
+          component={Menu}
+          options={{ title: "Menu" }}
+        />
+        <Stack.Screen
+          name="AddItemToMenu"
+          component={AddItemToMenu}
+          options={{ title: "AddItemToMenu" }} 
+        />
+         <Stack.Screen
+          name="CreateStoreForm"
+          component={CreateStoreForm}
+          options={{ title: "AddItemToMenu" }} 
+        />
+        <Stack.Screen
+          name="StoreReviews"
+          component={StoreReviews}
+          options={{ title: "StoreReviews" }} 
+        />
+        <Stack.Screen
+          name="PremiumIntroPage"
+          component={PremiumIntroPage}
+          options={{ title: "PremiumIntroPage" }}
+        />
+        <Stack.Screen
+          name="EditStoreImage"
+          component={EditStoreImage}
+          options={{ title: "EditStoreImage" }}
+        />
     </Stack.Navigator>
   );
 }
 
-function StackNavigator3() {
+function PremiumStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Chat_page"
-        component={ChatsScreen}
-        options={{ title: "Chats" }}
-      />
-      <Stack.Screen name="Friends" component={FriendsScreen} />
-      <Stack.Screen
-        name="Messages2"
-        component={ChatMessagesScreen}
-        options={{ presentation: "modal" }}
-      />
+          name="PremiumIntroPage"
+          component={PremiumIntroPage}
+          options={{ title: "PremiumIntroPage" }}
+        />
+        <Stack.Screen
+          name="PremiumPage"
+          component={PremiumPage}
+          options={{ title: "PremiumPage" }}
+        />
     </Stack.Navigator>
   );
 }
