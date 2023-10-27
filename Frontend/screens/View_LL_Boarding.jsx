@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { View, Text, StyleSheet, Image,Pressable,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image,Pressable,TouchableOpacity,ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { UserType } from "../UserContext";
@@ -75,6 +75,10 @@ const ViewBoarding = () => {
   };
 
   return (
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    style={{ backgroundColor: "#ffffff" }}
+  >
     <View style={styles.container}>
       {/* <Ionicons
         name="ios-arrow-back"
@@ -85,10 +89,7 @@ const ViewBoarding = () => {
       /> */}
      
       <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
-      <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
-      <Text style={styles.text}>Gender: {boardingg.gender}</Text>
-      <Text style={styles.text}>Price: ${boardingg.price}</Text>
-      <Text style={styles.text}>Description: {boardingg.description}</Text>
+     
 
 
       <TouchableOpacity style={styles.row} onPress={() => handleFeedbackPress2()}>
@@ -109,21 +110,38 @@ const ViewBoarding = () => {
 
       {userRole === "tenant" ? (
         
-          <Pressable
-          onPress={() => acceptRequest(boardingg.userId)}
-          style={{ backgroundColor: "#0066b2", padding: 10, borderRadius: 6 }}
-        >
-          <Text style={{ textAlign: "center", color: "white" }}>Chat with me</Text>
-        </Pressable>
+        //   <Pressable
+        //   onPress={() => acceptRequest(boardingg.userId)}
+        //   style={{ backgroundColor: "#0066b2", padding: 10, borderRadius: 6 }}
+        // >
+        //   <Text style={{ textAlign: "center", color: "white" }}>Chat with me</Text>
+        // </Pressable>
+        <TouchableOpacity style={styles.row} onPress={() => acceptRequest(boardingg.userId)}>
+        <View style={styles.leftContent}>
+          <View style={styles.image2}>
+            <Image
+              source={require("../assets/chat2.png")} // Replace with your image source
+              style={{ width: 30, height: 30 }}
+            />
+          </View>
+          <Text style={styles.text2}>Chat with me</Text>
+        </View>
+        <Ionicons style={styles.icon} name="chevron-forward-outline" />
+      </TouchableOpacity>
+
+        
          
         ):null}
-
-        <Text>Tenants</Text>
-
+      <View style={styles.textbox}>
+      <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
+      <Text style={styles.text}>Gender: {boardingg.gender}</Text>
+      <Text style={styles.text}>Price: Rs {boardingg.price}</Text>
+      <Text style={styles.text}>Description: {boardingg.description}</Text>
      
-
+      </View>
      
     </View>
+    </ScrollView>
   );
 };
 
@@ -133,12 +151,36 @@ const styles = StyleSheet.create({
     
     alignItems: 'center',
     backgroundColor: '#ffffff',
+    marginBottom:150,
+  },
+  textbox:{
+    flex: 1,
+    padding:10,
+//marginLeft:-160,
+marginTop:10,
+    alignItems: "flex-start",
+    borderRadius: 10,
+    backgroundColor:"#ffffff",
+    
+    width: 350,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
   },
   image: {
-    marginTop:50,
-    width: 300,
-    height: 300,
-    marginBottom: 10,
+    marginTop:30,
+    height: 250,
+    marginBottom: 40,
+    borderRadius: 10,
+    backgroundColor:"#F9FAFB",
+    borderWidth: 1,
+    borderColor:'#000000',
+    width: 350,
     
   },
   title: {
@@ -152,7 +194,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginBottom: 8,
-    marginLeft:-200,
+    // marginLeft:-200,
     color: '#000000',
   },
   backButton: {
@@ -168,10 +210,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 56,
     borderRadius: 15,
-    backgroundColor:"#F9FAFB",
-    borderWidth: 1,
-    borderColor:'#1DAB87',
+    backgroundColor: "#ffffff",
     width: 350,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
   },
   leftContent: {
     flexDirection: "row",

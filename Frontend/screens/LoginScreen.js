@@ -149,7 +149,15 @@ const styles = StyleSheet.create({
     padding: 10, // Add padding to the input field
     borderRadius: 10, // Add rounded corners
     color: 'black',
-    backgroundColor: 'rgba(74, 85, 162, 0.1)', // Add a light background color
+    backgroundColor: '#ffffff', // Add a light background color
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.5,
+    elevation: 5,
   },
   
   button: {

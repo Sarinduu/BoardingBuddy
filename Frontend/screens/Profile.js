@@ -67,8 +67,7 @@ const Profile = () => {
         />
         <Text
           style={{
-            marginTop: 20,
-            marginBottom: 40,
+            marginTop: 10,
             fontSize: 20,
             fontWeight: "bold",
             color: "#1D3A70",
@@ -76,6 +75,10 @@ const Profile = () => {
         >
           {recepientData?.name}
         </Text>
+
+        <Pressable onPress={handleLogout} style={styles.button}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </Pressable>
 
         <TouchableOpacity
           style={styles.row}
@@ -159,11 +162,9 @@ const Profile = () => {
           </View>
           <Ionicons style={styles.icon} name="chevron-forward-outline" />
         </TouchableOpacity>
-        <View style={styles.line}></View>
+       
 
-        <Pressable onPress={handleLogout} style={styles.button}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </Pressable>
+        
       </View>
     </ScrollView>
   );
@@ -186,9 +187,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 56,
     borderRadius: 15,
-    backgroundColor: "#F9FAFB",
+    backgroundColor: "#ffffff",
     // borderWidth: 1,
     width: 350,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.5,
+    elevation: 5,
   },
   leftContent: {
     flexDirection: "row",
@@ -200,8 +209,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 13,
     marginRight: 10,
-    borderWidth: 1,
-    borderColor: "#1DAB87",
+    
   },
   text: {
     fontSize: 16,
@@ -212,16 +220,17 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   button: {
-    width: 200,
+    width: 150,
     backgroundColor: "#1D3A70", // Updated button background color
     padding: 15,
-    marginTop: 30,
+    marginTop: 20,
+    marginBottom:20,
     alignSelf: "center", // Use alignSelf instead of marginLeft and marginRight
     borderRadius: 10,
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
   },

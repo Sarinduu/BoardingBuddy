@@ -5,9 +5,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { useTheme } from "react-native-paper";
 
-import FoodPlaces from "../screens/FoodPlaces";
-import Profile from "../screens/Profile";
-import AccountInfo from "../screens/AccountInfo";
+ import CreateStoreForm from "../screens/Merchant/CreateStoreScreen";
+ import AddItemToMenu from "../screens/Merchant/AddMenuItem";
+ import merchantProfile from "../screens/Merchant/MerchantProfile";
+ import Menu from "../screens/Merchant/Menu";
+ import PremiumPage from "../screens/Merchant/PremiumPage";
+ import PremiumIntroPage from "../screens/Merchant/PremiumIntroPage";
+ import Store from "../screens/Merchant/Stores";
+ import StoreDetails from "../screens/Merchant/StoreDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -48,30 +53,54 @@ function TabNavigatorRestaurant() {
         />
         
         <Tab.Screen
-          name="Profile"
-          component={ProfileTabNavigations}
+          name="Premium"
+          component={PremiumTabNavigations}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Image
-                source={require("../assets/user.png")}
+              source={require("../assets/favorite.png")}
                 style={{ width: 25, height: 25 }}
               />
             ),
           }}
         />
-      </Tab.Navigator>
-    );
-  }
+
+        <Tab.Screen
+          name="Profile"
+          component={ProfileTabNavigations}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Image
+              source={require("../assets/user.png")}
+               
+                style={{ width: 25, height: 25 }}
+              />
+            ),
+          }}
+        />
+       </Tab.Navigator>
+     );
+   }
 
 // -- Restaurant foodpalce
   function FoodPlacesTabNavigations() {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Tenant_FoodPlaces"
-          component={FoodPlaces}
-          options={{ title: "FoodPlaces" }}
+          name="Stores"
+          component={Store}
+          options={{ title: "Stores" }}
         />
+        <Stack.Screen
+          name="StoreDetails"
+          component={StoreDetails}
+          options={{ title: "StoreDetails" }}  
+        />
+        <Stack.Screen
+          name="Reviews"
+          component={CreateStoreForm}
+          options={{ title: "CreateStoreForm" }}
+          />
       </Stack.Navigator>
     );
   }
@@ -82,15 +111,44 @@ function TabNavigatorRestaurant() {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Tenant_Profile"
-          component={Profile}
-          options={{ title: "Profile" }}
+          name="merchantProfile"
+          component={merchantProfile}
+          options={{ title: "merchantProfile" }}
         />
          <Stack.Screen
-          name="accountinfo"
-          component={AccountInfo}
-          options={{ title: "AccountInfo" }}
+          name="Menu"
+          component={Menu}
+          options={{ title: "Menu" }}
         />
+        <Stack.Screen
+          name="AddItemToMenu"
+          component={AddItemToMenu}
+          options={{ title: "AddItemToMenu" }}
+        />
+        <Stack.Screen
+          name="PremiumIntroPage"
+          component={PremiumIntroPage}
+          options={{ title: "PremiumIntroPage" }}
+        />
+       
+      </Stack.Navigator>
+    );
+  }
+
+  function PremiumTabNavigations() {
+    return (
+      <Stack.Navigator>
+         <Stack.Screen
+          name="PremiumIntroPage"
+          component={PremiumIntroPage}
+          options={{ title: "PremiumIntroPage" }}
+        />
+        <Stack.Screen
+          name="PremiumPage"
+          component={PremiumPage}
+          options={{ title: "PremiumPage" }}
+        />
+        
       </Stack.Navigator>
     );
   }

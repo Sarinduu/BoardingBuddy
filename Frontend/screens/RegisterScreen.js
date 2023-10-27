@@ -210,7 +210,15 @@ const styles = StyleSheet.create({
     padding: 10, // Add padding to the input field
     borderRadius: 10, // Add rounded corners
     color: "black",
-    backgroundColor: "rgba(74, 85, 162, 0.1)", // Add a light background color
+    backgroundColor: '#ffffff', // Add a light background color
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.5,
+    elevation: 5,
   },
   button: {
     width: 200,
@@ -234,20 +242,30 @@ const styles = StyleSheet.create({
   },
 
   dropdown: {
-    backgroundColor: "rgba(74, 85, 162, 0.1)",
+   
     borderRadius: 10,
     height: 50,
     width: 320,
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderWidth: 0,
+    backgroundColor: '#ffffff', // Add a light background color
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.5,
+    elevation: 5,
   },
   dropdownContainer: {
     maxHeight: 200,
     borderRadius: 10,
-    borderWidth: 0,
+    borderWidth: 1,
 
     backgroundColor: "#ffffff",
+    
   },
   textStyle: {
     fontSize: 16,

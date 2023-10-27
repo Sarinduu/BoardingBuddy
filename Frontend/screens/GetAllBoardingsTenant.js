@@ -97,13 +97,13 @@ const [priceQuery, setPriceQuery] = useState('');
 
   const renderBoardingItem = ({ item }) => (
     <Pressable style={styles.boardingItem} onPress={() => handleViewPress(item._id)}>
-      <Image source={{ uri: item.image }} style={styles.boardingImage} />
-      <ScrollView style={styles.boardingDetails}>
-        <Text style={styles.boardingText}>Location: {item.boardingLocation}</Text>
-        <Text style={styles.boardingText}>Gender: {item.gender}</Text>
-        <Text style={styles.boardingText}>Price: Rs.{item.price}</Text>
-        <Text style={styles.boardingText}>Description: {item.description}</Text>
-      </ScrollView>
+      <Image source={{ uri: item.imgURL }} style={styles.boardingImage} />
+      <View style={styles.boardingDetails}>
+        <Text style={styles.boardingText}>{item.boardingLocation}</Text>
+        <Text style={styles.boardingText}>For {item.gender}</Text>
+        <Text style={styles.boardingText}>Rs.{item.price}</Text>
+        {/* <Text style={styles.boardingText}>Description: {item.description}</Text> */}
+      </View>
     </Pressable>
   );
 
@@ -141,11 +141,18 @@ const [priceQuery, setPriceQuery] = useState('');
       <View style={styles.clearButtonContainer}>
         <Button title="Clear" onPress={handleClearPress} color="green" />
       </View>
+      <ScrollView
+    showsVerticalScrollIndicator={false}
+    style={{ backgroundColor: "#ffffff" }}
+  >
       <FlatList
+      style={styles.flt}
         data={filteredBoardings}
         keyExtractor={(item) => item._id} 
         renderItem={renderBoardingItem}
       />
+
+    </ScrollView>
 
       {/* Success message modal */}
       <Modal isVisible={isSuccessModalVisible}>
@@ -169,26 +176,13 @@ const styles = StyleSheet.create({
     marginTop:40,
     marginLeft:100
   },
-  boardingItem: {
-    flexDirection: 'row',
-    padding: 10,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#1dab87',
-    borderBottomEndRadius:0.5,
-    
+  flt:{
+marginBottom:150,
   },
-  boardingImage: {
-    width: 100,
-    height: 100,
-    resizeMode: 'cover',
-  },
-  boardingDetails: {
-    flex: 1,
-    marginLeft: 10,
-  },
-  boardingText: {
-    fontSize: 16,
-  },
+  
+  
+  
+  
   buttonContainer: {
     justifyContent: 'flex-end',
   },
@@ -225,6 +219,50 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: -6,
      // Add margin from the search bars
+  },
+  boardingImage: {
+    marginLeft:20,
+    width: 100,
+    height: 100,
+    resizeMode: 'cover',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor:'#000000',
+    
+    width: 150,
+  },
+  boardingDetails: {
+    flex: 1,
+    paddingLeft:20,
+    alignItems:'flex-start',
+    justifyContent:'center',
+    marginLeft: 10,
+    borderRadius: 15,
+    
+    
+   
+  },
+  boardingText: {
+    fontSize: 17,
+    padding:5
+  },
+  boardingItem: {
+    flexDirection: 'row',
+    padding: 10,
+    margin:7,
+    borderRadius: 5,
+    backgroundColor:"#ffffff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 1.5,
+    elevation: 5,
+    
+    
+    
   },
 });
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect,useContext } from 'react';
-import { View, Text, StyleSheet, Image,Pressable, Alert,TouchableOpacity,Button } from 'react-native';
+import { View, Text, StyleSheet, Image,Pressable, Alert,TouchableOpacity,Button,ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { UserType } from "../UserContext";
 import axios from "axios";
@@ -65,14 +65,16 @@ const MyBoarding = () => {
   };
 
   return (
+
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    style={{ backgroundColor: "#ffffff" }}
+  >
     <View style={styles.container}>
      
-      <Image source={{ uri: boardingg.image }} style={styles.image} />
-      <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
-      <Text style={styles.text}>Gender: {boardingg.gender}</Text>
-      <Text style={styles.text}>Price: ${boardingg.price}</Text>
-      <Text style={styles.text}>Description: {boardingg.description}</Text>
+      <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
 
+      
       {/* <Button title="Feedback" onPress={handleFeedbackPress} style={styles.allRequestsButton} /> */}
 
       <TouchableOpacity style={styles.row} onPress={() => handleFeedbackPress()}>
@@ -100,6 +102,13 @@ const MyBoarding = () => {
         <Ionicons style={styles.icon} name="chevron-forward-outline" />
       </TouchableOpacity>
 
+      <View style={styles.textbox}>
+      <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
+      <Text style={styles.text}>Gender: {boardingg.gender}</Text>
+      <Text style={styles.text}>Price: ${boardingg.price}</Text>
+      <Text style={styles.text}>Description: {boardingg.description}</Text>
+</View>
+
 
       <TouchableOpacity 
   style={styles.editButton}
@@ -111,6 +120,7 @@ const MyBoarding = () => {
 
      
     </View>
+    </ScrollView>
   );
 };
 
@@ -120,13 +130,16 @@ const styles = StyleSheet.create({
     
     alignItems: 'center',
     backgroundColor: '#ffffff',
+        marginBottom: 200,
+
   },
   image: {
-    marginTop:50,
-    width: 300,
-    height: 300,
-    marginBottom: 10,
-    
+    marginTop:30,
+    width: 350,
+    height: 250,
+    marginBottom: 40,
+    borderRadius: 10,
+
   },
   title: {
     fontSize: 24,
@@ -139,7 +152,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginBottom: 8,
-    marginLeft:-200,
+    //marginLeft:-200,
     color: '#000000',
   },
   backButton: {
@@ -170,10 +183,16 @@ borderRadius: 10,
     paddingHorizontal: 10,
     height: 56,
     borderRadius: 15,
-    backgroundColor:"#F9FAFB",
-    borderWidth: 1,
-    borderColor:'#1DAB87',
+    backgroundColor: "#ffffff",
     width: 350,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 5,
   },
   leftContent: {
     flexDirection: "row",
@@ -190,6 +209,26 @@ borderRadius: 10,
     borderRadius: 13,
     marginRight: 10,
    
+  },
+  textbox:{
+    flex: 1,
+    padding:10,
+//marginLeft:-160,
+marginTop:10,
+    alignItems: "flex-start",
+    borderRadius: 10,
+    backgroundColor:"#ffffff",
+    
+    width: 350,
+    marginBottom:10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 5,
   },
 });
 
