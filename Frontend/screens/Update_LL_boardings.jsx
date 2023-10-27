@@ -46,7 +46,7 @@ const Update_LL_Boardings = () => {
 
   const handleUpdateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.13:8000/api/update-boardings/${boarding}`, {
+      const response = await axios.put(`http://192.168.1.13:8000/api/boardings/${boarding}`, {
         boardingLocation,
         gender,
         price,

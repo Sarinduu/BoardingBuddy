@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Linking  } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking, ScrollView  } from 'react-native';
 import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
 
@@ -75,7 +75,7 @@ const TenantProfile = () => {
   const isProfilePhotoAvailable = userDetails.image !== null && userDetails.image !== undefined;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.profileContainer}>
       
      
@@ -123,7 +123,7 @@ const TenantProfile = () => {
           )}
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

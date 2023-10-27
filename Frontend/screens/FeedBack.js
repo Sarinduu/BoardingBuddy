@@ -179,12 +179,12 @@ const FeedBack = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.commentContainer1}>
-    <TouchableOpacity  onPress={toggleCreateModal}>
+      <TouchableOpacity  onPress={toggleCreateModal} style={styles.commentContainer1}>
+   <View>
     <Image source={require('../assets/plusbutton.png')} style={styles.itemImage1} />
       <Text style={styles.modalTitle}>Add Review</Text>
+      </View>
     </TouchableOpacity>
-    </View>
     <FlatList
   data={comments}
   renderItem={({ item }) => (
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
    
-    paddingTop: 50, // Add padding to the top to move content down
+    paddingTop: 20, // Add padding to the top to move content down
    
   },
   scrollViewContent: {
@@ -353,6 +353,15 @@ const styles = StyleSheet.create({
     height: 70,
     marginLeft: 10,
     marginRight: 0,
+    backgroundColor:'#1dab87',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 5,
   },
  
   
@@ -368,8 +377,8 @@ const styles = StyleSheet.create({
     gap:20,
   },
   itemImage: {
-    width: 30, // Set the width of the image
-    height: 30, // Set the height of the image
+    width: 25, // Set the width of the image
+    height: 25, // Set the height of the image
     marginRight: 5, // Optional: Add some margin to the right of the image
   },
   itemImage1: {
@@ -377,6 +386,7 @@ const styles = StyleSheet.create({
     height: 25, // Set the height of the image
     marginRight: 10, // Optional: Add some margin to the right of the image
     marginLeft: 40,
+
   },
   button1: {
     padding: 10,
@@ -405,7 +415,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 24, // Set the font size
-    color: '#333', // Set the text color
+    color: '#000000', // Set the text color
     fontWeight: 'bold', // Set the font weight
     marginBottom: 10, // Add some margin at the bottom if needed
     
