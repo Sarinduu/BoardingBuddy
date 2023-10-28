@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, Platform, Modal, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import * as ImagePicker from "expo-image-picker";
@@ -14,6 +14,7 @@ const EditStoreImage = () => {
     const [imgURL, setImgURL] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const { userId, setUserId } = useContext(UserType);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -69,9 +70,8 @@ const EditStoreImage = () => {
         try {
             console.log("here")
             console.log(imgURL)
-          const response = await axios.post(`http://172.20.10.2:8000/api/store/updateStoreImage/yourUserId`, {imgURL: imgURL});
+          const response = await axios.post(`http://172.20.10.2:8000/api/store/updateStoreImage/${userId}`, {imgURL: imgURL});
     
-          console.log("there")
           if (response.status === 200) {
             const updatedStore = response.data;
             alert('Store Profile Image added Successfully!');

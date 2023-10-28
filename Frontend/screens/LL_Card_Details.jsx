@@ -58,7 +58,7 @@ const CardDetails = () => {
         </TouchableOpacity>
       </View>
 
-        <Text style={styles.headerText}>Card Details</Text>
+      <Text style={styles.headerText}>Card Details</Text>
 
       <TextInput
         style={styles.inputField}
@@ -127,18 +127,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight:200
+    marginRight: 200
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginLeft:0
+    marginLeft: 0
   },
   backwardIcon: {
     marginRight: 100,
-    marginTop:-300,
-    
+    marginTop: -300,
+
   },
   inputField: {
     width: 300,

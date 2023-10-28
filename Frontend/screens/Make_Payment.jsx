@@ -18,16 +18,16 @@ const MakePayment = () => {
         description,
         userId,
         imgURL
-      } = route.params || {};
+    } = route.params || {};
 
 
-      const handleAddBoarding = async () => {
-        console.log("uid",userId);
+    const handleAddBoarding = async () => {
+        console.log("uid", userId);
 
         console.log('Adding Boarding:', boardingLocation, gender, price, description, imgURL);
 
-        
-          try {
+
+        try {
             const response = await axios.post(
               "http://172.20.10.2:8000/api/boardings",
               {
@@ -39,14 +39,14 @@ const MakePayment = () => {
                 imgURL
               }
             );
-    
+
             console.log("Boarding added:", response.data);
-          
-          } catch (error) {
+
+        } catch (error) {
             console.error("Error adding boarding:", error);
-          
+
         }
-      };   
+    };
 
     const handleCardSelection = (card) => {
         setSelectedCard((prevSelectedCard) =>
@@ -74,8 +74,8 @@ const MakePayment = () => {
                 console.error('Error deleting card:', error);
             });
     };
-    
-    
+
+
 
     const handlePayment = () => {
         if (selectedCard) {
@@ -122,16 +122,16 @@ const MakePayment = () => {
 
     return (
         <View style={styles.container}>
-           <View style={styles.header}> 
+            <View style={styles.header}>
                 <TouchableOpacity
-                    onPress={() => navigation.goBack()} 
-                   style={styles.backButton}
+                    onPress={() => navigation.goBack()}
+                    style={styles.backButton}
                 >
                     <FontAwesome name="arrow-left" size={24} color="black" />
                 </TouchableOpacity>
                 <Text style={styles.makePayment} >Make Payment</Text>
-                </View>
-            
+            </View>
+
             <View style={styles.header2}>
                 <Text >Cards</Text>
                 <TouchableOpacity
@@ -189,41 +189,41 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff',
-    },   
+    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 100, 
-        marginTop:-200
+        marginBottom: 100,
+        marginTop: -200
     },
-    header2:{
-        flexDirection:'row',
-        marginBottom:30,
-        backgroundColor:'lightgray',
-        width:320,
-        height:30,
-        paddingTop:5,
-        paddingLeft:10
+    header2: {
+        flexDirection: 'row',
+        marginBottom: 30,
+        backgroundColor: 'lightgray',
+        width: 320,
+        height: 30,
+        paddingTop: 5,
+        paddingLeft: 10
 
     },
-    makePayment:{
-        fontSize:22,
-        
+    makePayment: {
+        fontSize: 22,
+
     },
     plusButton: {
         marginLeft: 230,
     },
     backButton: {
-       marginRight:100,
-       marginLeft:-100
+        marginRight: 100,
+        marginLeft: -100
     },
     cardContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 10,
         marginLeft: 20,
-        width:250
+        width: 250
     },
     radio: {
         width: 17,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         borderWidth: 2,
         borderColor: '#007BFF',
-        
+
     },
     radioDot: {
         width: 12,
@@ -255,11 +255,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         padding: 20,
         borderRadius: 10,
-        width:300,
-        height:400
+        width: 300,
+        height: 400
     },
     modalText: {
-        paddingTop:70,
+        paddingTop: 70,
         fontSize: 24,
         marginBottom: 10,
         textAlign: 'center',
@@ -267,20 +267,20 @@ const styles = StyleSheet.create({
     makePaymentButton: {
         padding: 10,
         borderRadius: 5,
-        marginTop:50
+        marginTop: 50
     },
     makePaymentButtonText: {
         color: 'white',
         fontSize: 18,
-       
+
     },
     closeButtonText: {
         color: 'blue',
         fontSize: 20,
-        marginTop:150,
-        paddingLeft:100,
-        backgroundColor:'lightgray',
-        height:24,
+        marginTop: 150,
+        paddingLeft: 100,
+        backgroundColor: 'lightgray',
+        height: 24,
 
     },
 });

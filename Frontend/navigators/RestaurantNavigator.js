@@ -13,6 +13,8 @@ import { useTheme } from "react-native-paper";
  import PremiumIntroPage from "../screens/Merchant/PremiumIntroPage";
  import Store from "../screens/Merchant/Stores";
  import StoreDetails from "../screens/Merchant/StoreDetails";
+ import EditStoreImage from "../screens/Merchant/EditStoreProfileImage";
+ import StoreReviews from '../screens/Merchant/StoreReviews'
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -99,7 +101,7 @@ function TabNavigatorRestaurant() {
         <Stack.Screen
           name="Reviews"
           component={CreateStoreForm}
-          options={{ title: "CreateStoreForm" }}
+          options={{ title: "CreateStore" }}
           />
       </Stack.Navigator>
     );
@@ -129,6 +131,21 @@ function TabNavigatorRestaurant() {
           name="PremiumIntroPage"
           component={PremiumIntroPage}
           options={{ title: "PremiumIntroPage" }}
+        />
+        <Stack.Screen
+          name="EditStoreImage"
+          component={EditStoreImage}
+          options={{ title: "EditStoreImage" }}
+        />
+        <Stack.Screen
+          name="CreateStoreForm"
+          component={CreateStoreForm}
+          options={{ title: "CreateStoreForm" }}
+        />
+        <Stack.Screen
+          name="StoreReviews"
+          component={StoreReviews}
+          options={{ title: "StoreReviews" }}
         />
        
       </Stack.Navigator>

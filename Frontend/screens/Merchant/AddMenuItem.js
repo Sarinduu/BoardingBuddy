@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, Platform, Modal, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { firebase } from "../../config";
+import { UserType } from "../../UserContext";
 
 const AddItemToMenu = ({ storeId }) => {
   const [uploading, setUploading] = useState(false);
@@ -13,10 +14,11 @@ const AddItemToMenu = ({ storeId }) => {
   const [imgURL, setImgURL] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const { userId, setUserId } = useContext(UserType);
 
   const addItemToMenu = async () => {
     try {
-      const response = await axios.post(`http://172.20.10.2:8000/api/stores/yourUserId/menu`, {name, price, image: imgURL});
+      const response = await axios.post(`http://172.20.10.2:8000/api/store/stores/${userId}/menu`, {name, price, image: imgURL});
 
       if (response.status === 200) {
         const updatedStore = response.data;

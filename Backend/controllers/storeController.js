@@ -151,6 +151,22 @@ exports.getStoreById = async (req, res) => {
   }
 };
 
+exports.getStoreByStoreId = async (req, res) => {
+  const { storeId } = req.params;
+
+  try {
+    const store = await Store.findById(storeId);
+
+    if (!store) {
+      return res.status(404).json({ error: 'Store not found' });
+    }
+
+    res.json(store);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.deleteItemFromMenu = async (req, res) => {
   const { uid, itemId } = req.params;
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createStore, getAllStores, addItemToMenu, addOfferToStore, addReviewToStore, updateStoreImage, getStoreById, deleteItemFromMenu} = require('../controllers/storeController');
+const { createStore, getAllStores, addItemToMenu, addOfferToStore, addReviewToStore, updateStoreImage, getStoreById, deleteItemFromMenu, getStoreByStoreId} = require('../controllers/storeController');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs'); // Don't forget to import the 'fs' module
@@ -43,5 +43,7 @@ router.post('/updateStoreImage/:uid', updateStoreImage);
 
 //Delete Item from Store
 router.delete('/deleteItemFromMenu/:uid/:itemId', deleteItemFromMenu); 
+
+router.get('/getStoreByStoreId/:storeId', getStoreByStoreId);
 
 module.exports = router;
