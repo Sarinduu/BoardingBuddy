@@ -11,7 +11,7 @@ const TenantProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.13:8000/api/user/user/${tenantid}`);
+        const response = await axios.get(`http://192.168.1.6:8000/api/user/user/${tenantid}`);
         setUserDetails(response.data); // Assuming the API response contains user details
       } catch (error) {
         console.error(error);

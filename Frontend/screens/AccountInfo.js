@@ -25,7 +25,7 @@ const AccountInfo = () => {
     //   setIsloading(true)
     //     try {
     //       const response = await fetch(
-    //         `http://192.168.1.13:8000/api/user/user/${userId}`
+    //         `http://192.168.1.6:8000/api/user/user/${userId}`
     //       );
     
     //       const data = await response.json();

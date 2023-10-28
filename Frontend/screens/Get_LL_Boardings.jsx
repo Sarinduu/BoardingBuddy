@@ -31,7 +31,7 @@ const Get_LL_boardings = () => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const handlePlusIconPress = () => {
-    navigation.navigate('LL_boardings'); 
+    navigation.navigate('LL_boardings');
   };
 
 
@@ -52,7 +52,7 @@ const Get_LL_boardings = () => {
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boardingToDelete._id}`, {
+      const response = await fetch(`http://192.168.1.6:8000/api/boardings/${boardingToDelete._id}`, {
         method: 'DELETE',
       });
 
@@ -85,7 +85,7 @@ const Get_LL_boardings = () => {
 
   const fetchBoardings = async () => {
     try {
-      const response = await fetch('http://192.168.1.13:8000/api/boardings');
+      const response = await fetch('http://192.168.1.6:8000/api/boardings');
       if (response.ok) {
         const data = await response.json();
         setBoardings(data);
@@ -129,17 +129,17 @@ const Get_LL_boardings = () => {
 
   return (
     <View style={styles.container}>
-            
 
-     
-            <View style={styles.addboarding}>
-      <View style={styles.centeredContainer}>
-        <TouchableOpacity style={styles.plusIcon} onPress={handlePlusIconPress}>
-          <Ionicons name="ios-add" size={30} color="blue" />
-        </TouchableOpacity>
+
+
+      <View style={styles.addboarding}>
+        <View style={styles.centeredContainer}>
+          <TouchableOpacity style={styles.plusIcon} onPress={handlePlusIconPress}>
+            <Ionicons name="ios-add" size={30} color="blue" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-      
+
       <FlatList
         data={boardings}
         keyExtractor={(item) => item._id}
@@ -172,9 +172,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },headerContainer: {
+  }, headerContainer: {
     flexDirection: 'row-reverse',
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
     marginTop: 40,
@@ -183,13 +183,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     padding: 10,
     marginLeft: 100,
-    marginTop:50
+    marginTop: 50
   },
   // plusIcon: {
   //   justifyContent: 'center',
   //   alignItems: 'center', // Adjust the margin to your preference for the backward icon
   // },
-  
+
   boardingItem: {
     flexDirection: 'row',
     padding: 10,
@@ -197,16 +197,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   addboarding: {
-   marginBottom:10,
-   marginTop:10,
+    marginBottom: 10,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
-   
+
   },
   centeredContainer: {
-   width:300,
-   height:50,
-   borderRadius:20,
+    width: 300,
+    height: 50,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1, // Add border properties here

@@ -1,17 +1,22 @@
-import React , {useEffect, useState}from 'react';
+import React , {useEffect, useState, useContext}from 'react';
 import { View, Text, Button, Image, FlatList, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import axios from 'axios';
+import { UserType } from "../../UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 
 
 const StoreMenu = () => {
 
   const [menu, setMenu] = useState([]); // Initial empty array of users
+  const { userId, setUserId } = useContext(UserType);
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.13:8000/api/store/getStore/yourUserId');
+        const response = await axios.get(`http://192.168.1.6:8000/api/store/getStore/${userId}`);
         setMenu(response.data.menu);
       } catch (error) {
         console.error(error);
@@ -23,7 +28,7 @@ const StoreMenu = () => {
 
     const deleteItemFromMenu = async(itemId) => {
       try {
-        const response = await axios.delete(`http://192.168.1.13:8000/api/store/deleteItemFromMenu/yourUserId/${itemId}`);
+        const response = await axios.delete(`http://192.168.1.6:8000/api/store/deleteItemFromMenu/yourUserId/${itemId}`);
         if(response.status == 200){
           alert('Item deleted');
           setMenu((prevMenu) => prevMenu.filter((item) => item._id !== itemId));

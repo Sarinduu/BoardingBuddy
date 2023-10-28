@@ -15,9 +15,9 @@ const Update_LL_Boardings = () => {
   const [image, setImage] = useState('');
   const [boardingData, setBoardingData] = useState(null);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
- 
 
-  const navigation = useNavigation(); 
+
+  const navigation = useNavigation();
 
   const showSuccessModal = () => {
     setIsSuccessModalVisible(true);
@@ -26,7 +26,7 @@ const Update_LL_Boardings = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://192.168.1.6:8000/api/boardings/${boarding}`);
         if (!response.ok) {
           throw new Error('Boarding not found');
         }
@@ -47,7 +47,7 @@ const Update_LL_Boardings = () => {
 
   const handleUpdateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.13:8000/api/boardings/${boarding}`, {
+      const response = await axios.put(`http://192.168.1.6:8000/api/boardings/${boarding}`, {
         boardingLocation,
         gender,
         price,
@@ -65,7 +65,7 @@ const Update_LL_Boardings = () => {
     <View style={styles.container}>
       {/* Back Button */}
 
-     
+
       <Text style={styles.text}>Boarding Location</Text>
       <TextInput
         style={styles.inputField}
@@ -74,7 +74,7 @@ const Update_LL_Boardings = () => {
         onChangeText={(text) => setBoardingLocation(text)}
       />
 
-      
+
       <Text style={styles.text2}>Gender</Text>
       <TextInput
         style={styles.inputField}
@@ -165,11 +165,11 @@ const styles = StyleSheet.create({
     top: 20,
     left: 20,
   },
-  text:{
-    marginLeft:-190
+  text: {
+    marginLeft: -190
   },
-  text2:{
-    marginLeft:-240  
+  text2: {
+    marginLeft: -240
   },
 });
 

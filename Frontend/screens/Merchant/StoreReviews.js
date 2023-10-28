@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView } from 'react-native';
+import { UserType } from "../../UserContext";
 
 const StoreReviews = () => {
     const [reviews, setReviews] = useState([]);
+    const { userId, setUserId } = useContext(UserType);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.13:8000/api/store/getStore/652fd61f9e018d51a71db767');
+                const response = await axios.get(`http://192.168.1.6:8000/api/store/getStore/${userId}`);
                 setReviews(response.data.review);
             } catch (error) {
                 console.error(error);

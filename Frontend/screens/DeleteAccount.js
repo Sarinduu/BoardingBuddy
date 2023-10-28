@@ -13,7 +13,7 @@ const DeleteAccount = () => {
 
   const deleteUser = async () => {
     try {
-      const response = await fetch(`http://192.168.1.13:8000/api/user/deleteuser/${userId}`, {
+      const response = await fetch(`http://192.168.1.6:8000/api/user/deleteuser/${userId}`, {
         method: 'DELETE',
       });
 

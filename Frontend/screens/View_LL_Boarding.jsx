@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useContext } from 'react';
-import { View, Text, StyleSheet, Image,Pressable,TouchableOpacity,ScrollView } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, Image, Pressable, TouchableOpacity, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { UserType } from "../UserContext";
@@ -13,13 +13,13 @@ const ViewBoarding = () => {
 
 
 
-  
+
 
 
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://192.168.1.6:8000/api/boardings/${boarding}`);
         console.log("Viewid", boarding)
         if (!response.ok) {
           throw new Error('Boarding not found');
@@ -45,7 +45,7 @@ const ViewBoarding = () => {
   const acceptRequest = async (friendRequestId) => {
     try {
       const response = await fetch(
-        "http://192.168.1.13:8000/api/user/friend-request/accept",
+        "http://192.168.1.6:8000/api/user/friend-request/accept",
         {
           method: "POST",
           headers: {
@@ -76,71 +76,71 @@ const ViewBoarding = () => {
 
   return (
     <ScrollView
-    showsVerticalScrollIndicator={false}
-    style={{ backgroundColor: "#ffffff" }}
-  >
-    <View style={styles.container}>
-      {/* <Ionicons
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: "#ffffff" }}
+    >
+      <View style={styles.container}>
+        {/* <Ionicons
         name="ios-arrow-back"
         size={32}
         color="black"
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       /> */}
-     
-      <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
-     
+
+        <Image source={{ uri: boardingg.imgURL }} style={styles.image} />
 
 
-      <TouchableOpacity style={styles.row} onPress={() => handleFeedbackPress2()}>
-        <View style={styles.leftContent}>
-          <View style={styles.image2}>
-            <Image
-              source={require("../assets/star.png")} // Replace with your image source
-              style={{ width: 30, height: 30 }}
-            />
+
+        <TouchableOpacity style={styles.row} onPress={() => handleFeedbackPress2()}>
+          <View style={styles.leftContent}>
+            <View style={styles.image2}>
+              <Image
+                source={require("../assets/star.png")} // Replace with your image source
+                style={{ width: 30, height: 30 }}
+              />
+            </View>
+            <Text style={styles.text2}>Ratings & reviews</Text>
           </View>
-          <Text style={styles.text2}>Ratings & reviews</Text>
+          <Ionicons style={styles.icon} name="chevron-forward-outline" />
+        </TouchableOpacity>
+
+
+        {/* <Button title="ALL Feedback" onPress={handleFeedbackPress2} style={styles.allRequestsButton} /> */}
+
+        {userRole === "tenant" ? (
+
+          //   <Pressable
+          //   onPress={() => acceptRequest(boardingg.userId)}
+          //   style={{ backgroundColor: "#0066b2", padding: 10, borderRadius: 6 }}
+          // >
+          //   <Text style={{ textAlign: "center", color: "white" }}>Chat with me</Text>
+          // </Pressable>
+          <TouchableOpacity style={styles.row} onPress={() => acceptRequest(boardingg.userId)}>
+            <View style={styles.leftContent}>
+              <View style={styles.image2}>
+                <Image
+                  source={require("../assets/chat2.png")} // Replace with your image source
+                  style={{ width: 30, height: 30 }}
+                />
+              </View>
+              <Text style={styles.text2}>Chat with me</Text>
+            </View>
+            <Ionicons style={styles.icon} name="chevron-forward-outline" />
+          </TouchableOpacity>
+
+
+
+        ) : null}
+        <View style={styles.textbox}>
+          <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
+          <Text style={styles.text}>Gender: {boardingg.gender}</Text>
+          <Text style={styles.text}>Price: Rs {boardingg.price}</Text>
+          <Text style={styles.text}>Description: {boardingg.description}</Text>
+
         </View>
-        <Ionicons style={styles.icon} name="chevron-forward-outline" />
-      </TouchableOpacity>
 
-
-      {/* <Button title="ALL Feedback" onPress={handleFeedbackPress2} style={styles.allRequestsButton} /> */}
-
-      {userRole === "tenant" ? (
-        
-        //   <Pressable
-        //   onPress={() => acceptRequest(boardingg.userId)}
-        //   style={{ backgroundColor: "#0066b2", padding: 10, borderRadius: 6 }}
-        // >
-        //   <Text style={{ textAlign: "center", color: "white" }}>Chat with me</Text>
-        // </Pressable>
-        <TouchableOpacity style={styles.row} onPress={() => acceptRequest(boardingg.userId)}>
-        <View style={styles.leftContent}>
-          <View style={styles.image2}>
-            <Image
-              source={require("../assets/chat2.png")} // Replace with your image source
-              style={{ width: 30, height: 30 }}
-            />
-          </View>
-          <Text style={styles.text2}>Chat with me</Text>
-        </View>
-        <Ionicons style={styles.icon} name="chevron-forward-outline" />
-      </TouchableOpacity>
-
-        
-         
-        ):null}
-      <View style={styles.textbox}>
-      <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
-      <Text style={styles.text}>Gender: {boardingg.gender}</Text>
-      <Text style={styles.text}>Price: Rs {boardingg.price}</Text>
-      <Text style={styles.text}>Description: {boardingg.description}</Text>
-     
       </View>
-     
-    </View>
     </ScrollView>
   );
 };
@@ -148,20 +148,20 @@ const ViewBoarding = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    marginBottom:150,
+    marginBottom: 150,
   },
-  textbox:{
+  textbox: {
     flex: 1,
-    padding:10,
-//marginLeft:-160,
-marginTop:10,
+    padding: 10,
+    //marginLeft:-160,
+    marginTop: 10,
     alignItems: "flex-start",
     borderRadius: 10,
-    backgroundColor:"#ffffff",
-    
+    backgroundColor: "#ffffff",
+
     width: 350,
     shadowColor: "#000",
     shadowOffset: {
@@ -173,22 +173,22 @@ marginTop:10,
     elevation: 5,
   },
   image: {
-    marginTop:30,
+    marginTop: 30,
     height: 250,
     marginBottom: 40,
     borderRadius: 10,
-    backgroundColor:"#F9FAFB",
+    backgroundColor: "#F9FAFB",
     borderWidth: 1,
-    borderColor:'#000000',
+    borderColor: '#000000',
     width: 350,
-    
+
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     //marginBottom: 10,
     //marginTop:-250,
-    marginRight:270,
+    marginRight: 270,
     color: '#070808',
   },
   text: {
@@ -235,7 +235,7 @@ marginTop:10,
     padding: 4,
     borderRadius: 13,
     marginRight: 10,
-   
+
   },
 });
 
