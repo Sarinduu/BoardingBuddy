@@ -69,7 +69,7 @@ const EditStoreImage = () => {
         try {
             console.log("here")
             console.log(imgURL)
-          const response = await axios.post(`http://192.168.1.13:8000/api/store/updateStoreImage/yourUserId`, {imgURL: imgURL});
+          const response = await axios.post(`http://172.20.10.2:8000/api/store/updateStoreImage/yourUserId`, {imgURL: imgURL});
     
           console.log("there")
           if (response.status === 200) {

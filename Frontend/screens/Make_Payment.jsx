@@ -29,7 +29,7 @@ const MakePayment = () => {
         
           try {
             const response = await axios.post(
-              "http://192.168.1.13:8000/api/boardings",
+              "http://172.20.10.2:8000/api/boardings",
               {
                 boardingLocation,
                 gender,
@@ -57,7 +57,7 @@ const MakePayment = () => {
     const handleDeleteCard = (cardId) => {
         // Send a DELETE request to the server to delete the card
         console.log(cardId)
-        fetch(`http://192.168.1.13:8000/api/cards/${cardId}`, {
+        fetch(`http://172.20.10.2:8000/api/cards/${cardId}`, {
             method: 'DELETE',
         })
             .then((response) => {
@@ -79,7 +79,7 @@ const MakePayment = () => {
 
     const handlePayment = () => {
         if (selectedCard) {
-            const paymentUrl = 'http://192.168.1.13:8000/api/payments';
+            const paymentUrl = 'http://172.20.10.2:8000/api/payments';
             const paymentData = {
                 card: selectedCard,
                 cardNumber: selectedCard.cardNumber,
@@ -96,6 +96,7 @@ const MakePayment = () => {
                     console.log('Payment Successful:', data);
                     setIsPaymentSuccessful(true);
                     handleAddBoarding();
+                    navigation.navigate('Get_LL_boardings')
                 })
                 .catch((error) => {
                     console.error('Error processing payment:', error);
@@ -104,7 +105,7 @@ const MakePayment = () => {
     };
 
     const fetchCards = () => {
-        const apiUrl = 'http://192.168.1.13:8000/api/cards';
+        const apiUrl = 'http://172.20.10.2:8000/api/cards';
         fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {

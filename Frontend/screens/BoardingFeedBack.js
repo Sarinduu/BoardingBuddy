@@ -19,7 +19,7 @@ const BoardingFeedBack = () => {
     // Fetch user details when the component mounts
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/user/user/${userId}`);
+        const response = await fetch(`http://172.20.10.2:8000/api/user/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -39,7 +39,7 @@ const BoardingFeedBack = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://192.168.1.13:8000/api/comments/boardings/${boardingId}/comments`);
+      const response = await fetch(`http://172.20.10.2:8000/api/comments/boardings/${boardingId}/comments`);
       const data = await response.json();
       if (response.ok) {
         setComments(data); // Update comments state with the retrieved comments
@@ -68,7 +68,7 @@ const BoardingFeedBack = () => {
       };
 
       // Send a POST request to create the comment in the backend
-      const response = await fetch(`http://192.168.1.13:8000/api/comments/boardings/${boardingId}/comments`, {
+      const response = await fetch(`http://172.20.10.2:8000/api/comments/boardings/${boardingId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -82,7 +82,7 @@ const ChatMessagesScreen = () => {
          else {
       try {
         const response = await axios.put(
-          `http://192.168.1.13:8000/api/boardings/${boarding}/addtenant`,
+          `http://172.20.10.2:8000/api/boardings/${boarding}/addtenant`,
           { tenantId:recepientId }
         );
         console.log("rep id ----- "+recepientId); // Log the response for now
@@ -103,7 +103,7 @@ const ChatMessagesScreen = () => {
   const fetchMessages = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.13:8000/api/user/messages/${userId}/${recepientId}`
+        `http://172.20.10.2:8000/api/user/messages/${userId}/${recepientId}`
       );
       const data = await response.json();
 
@@ -120,7 +120,7 @@ const ChatMessagesScreen = () => {
   const fetchRecepientData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.13:8000/api/user/user/${recepientId}`
+        `http://172.20.10.2:8000/api/user/user/${recepientId}`
       );
 
       const data = await response.json();
@@ -140,6 +140,10 @@ const ChatMessagesScreen = () => {
   //------------------------------------------ testing -----------------------------------------
   
   const handleSend = async (messageType, imageUri) => {
+    if(message === ""){
+      Alert.alert('please enter a message');
+      return;
+    }
     try {
       const formData = new FormData();
       formData.append("senderId", userId);
@@ -158,7 +162,7 @@ const ChatMessagesScreen = () => {
         formData.append("messageText", message);
       }
 
-      const response = await fetch("http://192.168.1.13:8000/api/user/messages", {
+      const response = await fetch("http://172.20.10.2:8000/api/user/messages", {
         method: "POST",
         body: formData,
       });
@@ -254,7 +258,7 @@ const ChatMessagesScreen = () => {
 
   const deleteMessages = async (messageIds) => {
     try {
-      const response = await fetch("http://192.168.1.13:8000/deleteMessages", {
+      const response = await fetch("http://172.20.10.2:8000/deleteMessages", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -311,7 +315,7 @@ const ChatMessagesScreen = () => {
   const fetchboardingdata = async () => {
     try {
         const response = await fetch(
-            `http://192.168.1.13:8000/api/user/getownboardings/${userId}`
+            `http://172.20.10.2:8000/api/user/getownboardings/${userId}`
         );
 
         const data = await response.json();

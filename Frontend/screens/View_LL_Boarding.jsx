@@ -19,7 +19,7 @@ const ViewBoarding = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://172.20.10.2:8000/api/boardings/${boarding}`);
         console.log("Viewid", boarding)
         if (!response.ok) {
           throw new Error('Boarding not found');
@@ -45,7 +45,7 @@ const ViewBoarding = () => {
   const acceptRequest = async (friendRequestId) => {
     try {
       const response = await fetch(
-        "http://192.168.1.13:8000/api/user/friend-request/accept",
+        "http://172.20.10.2:8000/api/user/friend-request/accept",
         {
           method: "POST",
           headers: {
@@ -72,6 +72,11 @@ const ViewBoarding = () => {
   const handleFeedbackPress2 = () => {
     // Pass boardingId as a parameter when navigating to the FeedBack component
     navigation.navigate("BoardingFeedBack", { boardingId: boarding });
+  };
+
+  const handletenants = () => {
+    // Pass boardingId as a parameter when navigating to the FeedBack component
+    navigation.navigate("Tenantinfo", { boardingId: boarding });
   };
 
   return (
@@ -131,6 +136,19 @@ const ViewBoarding = () => {
 
         
          
+        ):userRole === "landlord" ? (
+        <TouchableOpacity style={styles.row} onPress={() => handletenants()}>
+        <View style={styles.leftContent}>
+          <View style={styles.image2}>
+            <Image
+              source={require("../assets/tenants.png")} // Replace with your image source
+              style={{ width: 30, height: 30 }}
+            />
+          </View>
+          <Text style={styles.text2}>Other tenants</Text>
+        </View>
+        <Ionicons style={styles.icon} name="chevron-forward-outline" />
+      </TouchableOpacity>
         ):null}
       <View style={styles.textbox}>
       <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>

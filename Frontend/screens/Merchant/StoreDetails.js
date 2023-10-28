@@ -13,7 +13,7 @@ const StoreDetails = ({ storeId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.13:8000/api/store/getStore/yourUserId`);
+        const response = await axios.get(`http://172.20.10.2:8000/api/store/getStore/yourUserId`);
         setStore(response.data);
         console.log(store);
         setLoading(false);

@@ -12,7 +12,7 @@ const User = ({ item }) => {
   const acceptRequest = async (friendRequestId) => {
     try {
       const response = await fetch(
-        "http://192.168.1.13:8000/api/user/friend-request/accept",
+        "http://172.20.10.2:8000/api/user/friend-request/accept",
         {
           method: "POST",
           headers: {
@@ -43,7 +43,7 @@ const User = ({ item }) => {
   //   const fetchFriendRequests = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://192.168.1.13:8000/api/user/friend-requests/sent/${userId}`
+  //         `http://172.20.10.2:8000/api/user/friend-requests/sent/${userId}`
   //       );
 
   //       const data = await response.json();
@@ -63,7 +63,7 @@ const User = ({ item }) => {
   // useEffect(() => {
   //   const fetchUserFriends = async () => {
   //     try {
-  //       const response = await fetch(`http://192.168.1.13:8000/api/user/friends/${userId}`);
+  //       const response = await fetch(`http://172.20.10.2:8000/api/user/friends/${userId}`);
 
   //       const data = await response.json();
 
@@ -81,7 +81,7 @@ const User = ({ item }) => {
   // }, []);
   // const sendFriendRequest = async (currentUserId, selectedUserId) => {
   //   try {
-  //     const response = await fetch("http://192.168.1.13:8000/api/user/friend-request", {
+  //     const response = await fetch("http://172.20.10.2:8000/api/user/friend-request", {
   //       method: "POST",
   //       headers: {
   //         "Content-Type": "application/json",

@@ -52,7 +52,7 @@ const Get_LL_boardings = () => {
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boardingToDelete._id}`, {
+      const response = await fetch(`http://172.20.10.2:8000/api/boardings/${boardingToDelete._id}`, {
         method: 'DELETE',
       });
 
@@ -85,7 +85,7 @@ const Get_LL_boardings = () => {
 
   const fetchBoardings = async () => {
     try {
-      const response = await fetch('http://192.168.1.13:8000/api/boardings');
+      const response = await fetch('http://172.20.10.2:8000/api/boardings');
       if (response.ok) {
         const data = await response.json();
         setBoardings(data);
@@ -130,7 +130,7 @@ const Get_LL_boardings = () => {
   return (
     <View style={styles.container}>
             
-
+   
      
             <View style={styles.addboarding}>
       <View style={styles.centeredContainer}>
@@ -141,6 +141,7 @@ const Get_LL_boardings = () => {
     </View>
       
       <FlatList
+      style={styles.container2}
         data={boardings}
         keyExtractor={(item) => item._id}
         renderItem={renderBoardingItem}
@@ -164,6 +165,7 @@ const Get_LL_boardings = () => {
           </View>
         </View>
       </Modal>
+
     </View>
   );
 };
@@ -178,6 +180,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     marginTop: 40,
+  },
+  container2:{
+marginBottom:150,
   },
   header: {
     fontSize: 24,

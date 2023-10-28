@@ -122,7 +122,7 @@ const LL_boardings = () => {
     try {
         console.log("here")
         console.log(imgURL)
-      const response = await axios.post(`http://192.168.1.13:8000/api/boardings/${userId}`, {imgURL: imgURL});
+      const response = await axios.post(`http://172.20.10.2:8000/api/boardings/${userId}`, {imgURL: imgURL});
 
       console.log("there")
       if (response.status === 200) {

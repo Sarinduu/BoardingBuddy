@@ -22,6 +22,10 @@ import CardDetails from "../screens/LL_Card_Details";
 import EditAccountInfo from "../screens/EditAccountInfo";
 import MyFeedbacks from "../screens/MyFeedbacks";
 import BoardingFeedBack from "../screens/BoardingFeedBack";
+import Tenantinfo from "../screens/Tenantinfo";
+import TenantProfile from "../screens/TenantProfile";
+import ChangePassword from "../screens/ChangePassword";
+import DeleteAccount from "../screens/DeleteAccount";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -133,6 +137,16 @@ function TabNavigatorLandlord() {
         component={BoardingFeedBack}
         options={{ title: "Boarding FeedBacks" }}
       />
+       <Stack.Screen
+        name="Tenantinfo"
+        component={Tenantinfo}
+        options={{ title: "Tenant details"}}
+      />
+      <Stack.Screen
+        name="TenantProfile"
+        component={TenantProfile}
+        options={{ title: "Tenant details"}}
+        />
       </Stack.Navigator>
     );
   }
@@ -180,6 +194,18 @@ function TabNavigatorLandlord() {
         component={MyFeedbacks}
         options={{ title: "My Feedbacks"}}
       />
+       <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{ title: ""}}
+      />
+      <Stack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
+        options={{ title: "Delete My Account"}}
+      />
+      
+     
       </Stack.Navigator>
     );
   }

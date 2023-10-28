@@ -29,7 +29,7 @@ const FeedBack = () => {
     // Fetch user details when the component mounts
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/user/user/${userId}`);
+        const response = await fetch(`http://172.20.10.2:8000/api/user/user/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -50,7 +50,7 @@ const FeedBack = () => {
 
   const fetchComments = async () => {
     try {
-      const response = await fetch(`http://192.168.1.13:8000/api/comments/boardings/${boardingId}/comments`);
+      const response = await fetch(`http://172.20.10.2:8000/api/comments/boardings/${boardingId}/comments`);
       const data = await response.json();
       if (response.ok) {
         const filteredComments = data.filter(comment => comment.userId === userId);
@@ -93,7 +93,7 @@ const FeedBack = () => {
   
   const handleDeleteComment = () => {
     if (selectedCommentId) {
-      axios.delete(`http://192.168.1.13:8000/api/comments/comments/${selectedCommentId}`)
+      axios.delete(`http://172.20.10.2:8000/api/comments/comments/${selectedCommentId}`)
       .then(() => {
         // Remove the deleted comment from the UI
         const updatedComments = comments.filter(comment => comment._id !== selectedCommentId);
@@ -112,7 +112,7 @@ const FeedBack = () => {
   const handleUpdateComment = () => {
     // Send the update request to the server
     if (selectedCommentId) {
-      axios.put(`http://192.168.1.13:8000/api/comments/comments/${selectedCommentId}`, {
+      axios.put(`http://172.20.10.2:8000/api/comments/comments/${selectedCommentId}`, {
         text: editedText,
         
       })
@@ -150,7 +150,7 @@ const FeedBack = () => {
       };
 
       // Send a POST request to create the comment in the backend
-      const response = await fetch(`http://192.168.1.13:8000/api/comments/boardings/${boardingId}/comments`, {
+      const response = await fetch(`http://172.20.10.2:8000/api/comments/boardings/${boardingId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

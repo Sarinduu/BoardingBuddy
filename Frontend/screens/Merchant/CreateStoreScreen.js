@@ -24,7 +24,7 @@ const CreateStoreForm = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://192.168.1.13:8000/create-store', formData);
+      const response = await axios.post('http://172.20.10.2:8000/create-store', formData);
       console.log(response.data);
       navigation.navigate("StoreDetails");
     } catch (error) {

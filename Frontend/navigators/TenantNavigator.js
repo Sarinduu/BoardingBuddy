@@ -199,7 +199,7 @@ function BoardingTabNavigations() {
         options={{ title: "Give Review"}}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Tenantinfo"
         component={Tenantinfo}
         options={{ title: "Tenant details"}}
@@ -217,7 +217,7 @@ function BoardingTabNavigations() {
        <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
-        options={{ title: "Change Password"}}
+        options={{ title: ""}}
       />
        <Stack.Screen
         name="Tenant_MyFeedbacks"

@@ -8,7 +8,7 @@ const Store = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.13:8000/api/store/get-all-stores');
+        const response = await axios.get('http://172.20.10.2:8000/api/store/get-all-stores');
         setStores(response.data);
       } catch (error) {
         console.error(error);

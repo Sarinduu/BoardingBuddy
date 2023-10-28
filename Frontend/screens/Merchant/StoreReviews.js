@@ -8,7 +8,7 @@ const StoreReviews = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.13:8000/api/store/getStore/652fd61f9e018d51a71db767');
+                const response = await axios.get('http://172.20.10.2:8000/api/store/getStore/652fd61f9e018d51a71db767');
                 setReviews(response.data.review);
             } catch (error) {
                 console.error(error);

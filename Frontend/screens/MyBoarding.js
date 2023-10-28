@@ -17,7 +17,7 @@ const MyBoarding = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://172.20.10.2:8000/api/boardings/${boarding}`);
         console.log("Viewid", boarding)
         if (!response.ok) {
           throw new Error('Boarding not found');
@@ -42,7 +42,7 @@ const MyBoarding = () => {
 
   const updateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.13:8000/api/user/upboarding/${userId}/${boarding}`, {
+      const response = await axios.put(`http://172.20.10.2:8000/api/user/upboarding/${userId}/${boarding}`, {
       });
       console.log(response.data);
       Alert.alert("remove boarding successfully")
@@ -105,7 +105,7 @@ const MyBoarding = () => {
       <View style={styles.textbox}>
       <Text style={styles.text}>Location: {boardingg.boardingLocation}</Text>
       <Text style={styles.text}>Gender: {boardingg.gender}</Text>
-      <Text style={styles.text}>Price: ${boardingg.price}</Text>
+      <Text style={styles.text}>Price: Rs {boardingg.price}</Text>
       <Text style={styles.text}>Description: {boardingg.description}</Text>
 </View>
 

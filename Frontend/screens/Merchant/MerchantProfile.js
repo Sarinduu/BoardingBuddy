@@ -16,7 +16,7 @@ const merchantProfile = ({ navigation }) => {
         // Create a separate function for the API request
         const fetchStoreName = async () => {
           try {
-            const response = await axios.get('http://192.168.1.13:8000/api/store/getStore/652fd61f9e018d51a71db767');
+            const response = await axios.get('http://172.20.10.2:8000/api/store/getStore/652fd61f9e018d51a71db767');
             setStore(response.data);
           } catch (error) {
             console.error('Error fetching store data:', error);
