@@ -1,9 +1,9 @@
 // ProfileScreen.js
-import React , {useState, useEffect} from 'react';
+import React , {useState, useEffect, useContext} from 'react';
 import { View, Image, Text, TouchableOpacity,StyleSheet } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
-
+import { UserType } from "../../UserContext";
 
 const merchantProfile = ({ navigation }) => {
   //const navigation = useNavigation();
@@ -11,12 +11,13 @@ const merchantProfile = ({ navigation }) => {
     const [store, setStore] = useState('');
     const [storeImage, setStoreImage] = useState('');
     const [user, setUser] = useState('');
+    const { userId, setUserId } = useContext(UserType);
 
     useEffect(() => {
         // Create a separate function for the API request
         const fetchStoreName = async () => {
           try {
-            const response = await axios.get('http://192.168.1.13:8000/api/store/getStore/652fd61f9e018d51a71db767');
+            const response = await axios.get(`http://192.168.1.6:8000/api/store/getStore/${userId}`);
             setStore(response.data);
           } catch (error) {
             console.error('Error fetching store data:', error);
@@ -28,10 +29,14 @@ const merchantProfile = ({ navigation }) => {
       }, []);
     return (
         <View style={styles.container}>
+          <TouchableOpacity 
+            onPress={() => {
+            navigation.navigate("EditStoreImage")}}>
           <Image
-            source={store.storeImage}
+            source={{uri: store.storeImage}}
             style={styles.profileImage}
           />
+          </TouchableOpacity>
         <Text style={styles.name}>{store.storeName}</Text>
           <Text style={styles.subtitle}>Your Name</Text>
           <View style={styles.buttonContainer}>
@@ -43,13 +48,13 @@ const merchantProfile = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('CreateStore')}
+              onPress={() => navigation.navigate('CreateStoreForm')}
             >
               <Text style={styles.buttonText}>Manage Store</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('StoreReviews')}
+              onPress={() => navigation.navigate('Menu')}
             >
               <Text style={styles.buttonText}>Manage Menu</Text>
             </TouchableOpacity>

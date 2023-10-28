@@ -12,7 +12,7 @@ const Tenantinfo = ({ route }) => {
   useEffect(() => {
     const fetchTenantInfo = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.13:8000/api/boardings/${boardingId}`);
+        const response = await axios.get(`http://192.168.1.6:8000/api/boardings/${boardingId}`);
         const { tenants, boardingLocation } = response.data;
         setTenants(tenants);
         setBoardingLocation(boardingLocation);
@@ -28,7 +28,7 @@ const Tenantinfo = ({ route }) => {
     const tenantDetails = await Promise.all(
       tenants.map(async (tenantId) => {
         try {
-          const response = await axios.get(`http://192.168.1.13:8000/api/user/user/${tenantId}`);
+          const response = await axios.get(`http://192.168.1.6:8000/api/user/user/${tenantId}`);
           const { name, image } = response.data; // Assuming your API response includes 'name' and 'image' properties
           return { name, image };
         } catch (error) {

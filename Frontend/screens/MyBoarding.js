@@ -17,7 +17,7 @@ const MyBoarding = () => {
   useEffect(() => {
     const fetchBoardingDetails = async () => {
       try {
-        const response = await fetch(`http://192.168.1.13:8000/api/boardings/${boarding}`);
+        const response = await fetch(`http://192.168.1.6:8000/api/boardings/${boarding}`);
         console.log("Viewid", boarding)
         if (!response.ok) {
           throw new Error('Boarding not found');
@@ -42,7 +42,7 @@ const MyBoarding = () => {
 
   const updateBoarding = async () => {
     try {
-      const response = await axios.put(`http://192.168.1.13:8000/api/user/upboarding/${userId}/${boarding}`, {
+      const response = await axios.put(`http://192.168.1.6:8000/api/user/upboarding/${userId}/${boarding}`, {
       });
       console.log(response.data);
       Alert.alert("remove boarding successfully")

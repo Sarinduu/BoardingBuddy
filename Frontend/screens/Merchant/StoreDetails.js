@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Image, StyleSheet, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
+import { UserType } from "../../UserContext";
 
 
-const StoreDetails = ({ storeId }) => {
+const StoreDetails = ({ route }) => {
   const navigation = useNavigation();
 
   const [store, setStore] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { userId, setUserId } = useContext(UserType);
+
+  const storeId = route.params.storeId;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.13:8000/api/store/getStore/yourUserId`);
+        const response = await axios.get(`http://192.168.1.6:8000/api/store/getStoreByStoreId/${storeId}`);
         setStore(response.data);
         console.log(store);
         setLoading(false);
@@ -36,7 +40,10 @@ const StoreDetails = ({ storeId }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{uri: store.storeImage}} style={styles.image} />
+      <Image
+        source={store.storeImage ? { uri: store.storeImage } : require('../../assets/1440x480_52.webp')}
+        style={styles.image}
+      />
       <Text style={styles.heading}>{store.storeName}</Text>
       <Text style={styles.itemText}>{store.storeRating}</Text>
       <Text style={styles.itemText}>{store.storeAddress}</Text>

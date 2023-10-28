@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView , TouchableOpacity} from 'react-native';
 import axios from 'axios';
+import { useNavigation } from "@react-navigation/native";
 
 const Store = () => {
   const [stores, setStores] = useState([]);
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.13:8000/api/store/get-all-stores');
+        const response = await axios.get('http://192.168.1.6:8000/api/store/get-all-stores');
         setStores(response.data);
       } catch (error) {
         console.error(error);
@@ -21,7 +24,9 @@ const Store = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {stores.map((store, index) => (
-        <View style={styles.storeContainer} key={index}>
+        <TouchableOpacity style={styles.storeContainer} key={index}
+          onPress={() => {
+          navigation.navigate("StoreDetails", { storeId: store._id })}}>
           <Image source={{uri: store.storeImage}} style={styles.image} />
 
         <View style={{ flexDirection: 'row' }}>
@@ -32,8 +37,8 @@ const Store = () => {
         <View style={{ flexDirection: 'row' }}>
           <Text style={styles.additionalText}>Open: {store.openingHours}</Text>
           <Text style={styles.additionalText}>-{store.closingHours}</Text>
-          </View>
-        </View>
+          </View> 
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );
