@@ -21,7 +21,7 @@ const MyFeedbacks = () => {
     const fetchboardingdata = async () => {
         try {
             const response = await fetch(
-                `http://192.168.1.6:8000/api/user/getownboardings/${userId}`
+                `http://172.20.10.2:8000/api/user/getownboardings/${userId}`
             );
 
             const data = await response.json();

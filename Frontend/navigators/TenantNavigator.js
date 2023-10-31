@@ -24,6 +24,17 @@ import DeleteAccount from "../screens/DeleteAccount";
 import ChangePassword from "../screens/ChangePassword";
 import MyFeedbacks from "../screens/MyFeedbacks";
 
+import CreateStoreForm from "../screens/Merchant/CreateStoreScreen";
+ import AddItemToMenu from "../screens/Merchant/AddMenuItem";
+ import merchantProfile from "../screens/Merchant/MerchantProfile";
+ import Menu from "../screens/Merchant/Menu";
+ import PremiumPage from "../screens/Merchant/PremiumPage";
+ import PremiumIntroPage from "../screens/Merchant/PremiumIntroPage";
+ import Store from "../screens/Merchant/Stores";
+ import StoreDetails from "../screens/Merchant/StoreDetails";
+ import EditStoreImage from "../screens/Merchant/EditStoreProfileImage";
+ import StoreReviews from '../screens/Merchant/StoreReviews'
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -143,9 +154,24 @@ function BoardingTabNavigations() {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Tenant_FoodPlaces"
-          component={FoodPlaces}
-          options={{ title: "FoodPlaces" }}
+          name="Stores"
+          component={Store}
+          options={{ title: "Stores" }}
+        />
+        <Stack.Screen
+          name="StoreDetails"
+          component={StoreDetails}
+          options={{ title: "StoreDetails" }}  
+        />
+        <Stack.Screen
+          name="Reviews"
+          component={CreateStoreForm}
+          options={{ title: "CreateStore" }}
+          />
+           <Stack.Screen
+          name="StoreReviews"
+          component={StoreReviews}
+          options={{ title: "StoreReviews" }}
         />
       </Stack.Navigator>
     );
@@ -199,7 +225,7 @@ function BoardingTabNavigations() {
         options={{ title: "Give Review"}}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Tenantinfo"
         component={Tenantinfo}
         options={{ title: "Tenant details"}}
@@ -217,7 +243,7 @@ function BoardingTabNavigations() {
        <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
-        options={{ title: "Change Password"}}
+        options={{ title: ""}}
       />
        <Stack.Screen
         name="Tenant_MyFeedbacks"

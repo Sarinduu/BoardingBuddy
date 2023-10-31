@@ -11,7 +11,7 @@ const Store = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.1.6:8000/api/store/get-all-stores');
+        const response = await axios.get('http://172.20.10.2:8000/api/store/get-all-stores');
         setStores(response.data);
       } catch (error) {
         console.error(error);
@@ -22,7 +22,11 @@ const Store = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    contentContainerStyle={{ backgroundColor: "#ffffff"}}
+  >
+    <View style={styles.container}>
       {stores.map((store, index) => (
         <TouchableOpacity style={styles.storeContainer} key={index}
           onPress={() => {
@@ -40,6 +44,7 @@ const Store = () => {
           </View> 
         </TouchableOpacity>
       ))}
+      </View>
     </ScrollView>
   );
 };
@@ -47,6 +52,8 @@ const Store = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    marginBottom:180,
+    
   },
   storeContainer: {
     width: '90%',

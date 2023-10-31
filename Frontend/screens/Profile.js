@@ -32,7 +32,7 @@ const Profile = () => {
   const fetchRecepientData = async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.6:8000/api/user/user/${userId}`
+        `http://172.20.10.2:8000/api/user/user/${userId}`
       );
 
       const data = await response.json();
@@ -45,7 +45,7 @@ const Profile = () => {
   useEffect(() => {
     fetchRecepientData();
     //console.log("message fetched")
-  },[]);
+  });
 
   return (
     <ScrollView
@@ -122,7 +122,7 @@ const Profile = () => {
           </TouchableOpacity>
         ) : null}
 
-        <TouchableOpacity style={styles.row} onPress={() => {navigation.navigate('Tenant_MyFeedbacks')}}>
+        {/* <TouchableOpacity style={styles.row} onPress={() => {navigation.navigate('Tenant_MyFeedbacks')}}>
           <View style={styles.leftContent}>
             <View style={styles.image}>
               <Image
@@ -133,10 +133,9 @@ const Profile = () => {
             <Text style={styles.text}>My Feedbacks</Text>
           </View>
           <Ionicons style={styles.icon} name="chevron-forward-outline" />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
-        <View style={styles.line}></View>
-
+       
         <TouchableOpacity style={styles.row} onPress={() => {navigation.navigate('ChangePassword')}}>
           <View style={styles.leftContent}>
             <View style={styles.image}>

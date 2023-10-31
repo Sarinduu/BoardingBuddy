@@ -196,6 +196,32 @@ const getUserdetails = async (req, res) => {
       res.status(500).json({ message: "Error updating the user!" });
     }
   };
+
+  const updatePassword = async (req, res) => {
+    const { userId } = req.params; 
+    
+   
+    try {
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        const { password } = req.body;
+        
+        // Update the user object with the new password
+        user.password = password;
+        
+        await user.save();
+        
+        res.status(200).json({ user: user, message: "Password updated successfully" });
+    } catch (err) {
+        console.log("Error updating password", err);
+        res.status(500).json({ message: "Error updating the password!" });
+    }
+};
+
   
 
   const updateUserboarding = async (req, res) => {
@@ -276,6 +302,7 @@ module.exports = {
   registerUser,
   login,
   updateUser,
+  updatePassword,
   alllogedinUsers,
   acceptFriendReq,
   allFriends,

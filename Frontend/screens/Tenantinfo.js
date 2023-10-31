@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect ,useContext} from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity ,Alert} from 'react-native';
 import axios from 'axios';
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { UserType } from "../UserContext";
 
 
 const Tenantinfo = ({ route }) => {
@@ -9,10 +10,12 @@ const Tenantinfo = ({ route }) => {
   const [boardingLocation, setBoardingLocation] = useState('');
   const [tenants, setTenants] = useState([]);
   const navigation = useNavigation();
+  const { userId, userRole } = useContext(UserType);
+
   useEffect(() => {
     const fetchTenantInfo = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.6:8000/api/boardings/${boardingId}`);
+        const response = await axios.get(`http://172.20.10.2:8000/api/boardings/${boardingId}`);
         const { tenants, boardingLocation } = response.data;
         setTenants(tenants);
         setBoardingLocation(boardingLocation);
@@ -28,7 +31,7 @@ const Tenantinfo = ({ route }) => {
     const tenantDetails = await Promise.all(
       tenants.map(async (tenantId) => {
         try {
-          const response = await axios.get(`http://192.168.1.6:8000/api/user/user/${tenantId}`);
+          const response = await axios.get(`http://172.20.10.2:8000/api/user/user/${tenantId}`);
           const { name, image } = response.data; // Assuming your API response includes 'name' and 'image' properties
           return { name, image };
         } catch (error) {
@@ -57,6 +60,22 @@ const Tenantinfo = ({ route }) => {
     });
   };
 
+  const updateBoarding = async (userId) => {
+    try {
+      const response = await axios.put(`http://172.20.10.2:8000/api/user/upboarding/${userId}/${boardingId}`, {
+      });
+      console.log(response.data);
+      Alert.alert("remove tenant successfully")
+      navigation.goBack()
+     
+      // Handle success or other operations on successful update
+    } catch (error) {
+      console.error("Error updating user", error);
+      // Handle error state or display error message
+    }
+  };
+
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>Tenant List for: {boardingLocation}</Text>
@@ -72,6 +91,18 @@ const Tenantinfo = ({ route }) => {
           <Image source={require('../assets/info.png')} style={styles.itemImage} />
           {/* <Text style={styles.buttonText}>Update</Text> */}
         </TouchableOpacity>
+
+        {userRole === "landlord" ? (
+                  <TouchableOpacity 
+                  style={styles.editButton}
+                  onPress={() => updateBoarding(tenants[index])}
+                >
+                <Image source={require('../assets/delete.png')} style={styles.itemImage2} />
+                </TouchableOpacity>
+        ) : null}
+
+
+
           </View>
         </View>
       ))}
@@ -107,8 +138,15 @@ const styles = StyleSheet.create({
     width: 30, // Set the width of the image
     height: 30, // Set the height of the image
     marginRight: 5, // Optional: Add some margin to the right of the image
-    marginLeft: 180,
+    marginLeft: 130,
   },
+  itemImage2:{
+    width: 30, // Set the width of the image
+    height: 30, // Set t
+  },
+  editButton:{
+    marginLeft: 20,
+  }
 });
 
 export default Tenantinfo;

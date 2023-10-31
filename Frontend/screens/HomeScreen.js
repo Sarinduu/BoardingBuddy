@@ -44,7 +44,7 @@ const HomeScreen = () => {
       console.log("user role ----- ", userRole);
 
       axios
-        .get(`http://192.168.1.6:8000/api/user/users/${userId}`)
+        .get(`http://172.20.10.2:8000/api/user/users/${userId}`)
         .then((response) => {
           setUsers(response.data);
         })

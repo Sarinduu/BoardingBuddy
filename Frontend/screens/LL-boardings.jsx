@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { UserType } from "../UserContext";
 
 import * as ImagePicker from 'expo-image-picker';
-import { firebase } from '../config';
+import {firebase} from '../config';
 import * as FileSystem from 'expo-file-system';
 
 const LL_boardings = () => {
@@ -23,7 +23,7 @@ const LL_boardings = () => {
   const [imgURL, setImgURL] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const pickImage = async () => {
+  const pickImage = async() => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -35,7 +35,7 @@ const LL_boardings = () => {
     }
   };
 
-  const uploadImage = async () => {
+  const uploadImage = async() => {
     setUploading(true);
     try {
       const { uri } = await FileSystem.getInfoAsync(image);
@@ -57,9 +57,9 @@ const LL_boardings = () => {
 
       await ref.put(blob);
       const url = await ref.getDownloadURL();
-
+    
       setImgURL(url);
-      console.log("image url ---------- " + url);
+          console.log("image url ---------- " + url);
 
       setUploading(false);
       Alert.alert('Photo Uploaded !!');
@@ -94,10 +94,10 @@ const LL_boardings = () => {
     if (validateForm()) {
       console.log("url", imgURL);
       try {
-
-
-        console.log("Boardingdata", boardingLocation, gender)
-
+        
+  
+        console.log("Boardingdata",boardingLocation,gender)
+  
         // Pass boarding details as route parameters when navigating to MakePayment
         navigation.navigate("MakePayment", {
           boardingLocation,
@@ -112,7 +112,7 @@ const LL_boardings = () => {
       }
     }
   };
-
+  
 
   const handleBackPress = () => {
     navigation.goBack();
@@ -120,9 +120,9 @@ const LL_boardings = () => {
 
   const UpdateImage = async () => {
     try {
-      console.log("here")
-      console.log(imgURL)
-      const response = await axios.post(`http://192.168.1.6:8000/api/boardings/${userId}`, { imgURL: imgURL });
+        console.log("here")
+        console.log(imgURL)
+      const response = await axios.post(`http://172.20.10.2:8000/api/boardings/${userId}`, {imgURL: imgURL});
 
       console.log("there")
       if (response.status === 200) {
@@ -137,7 +137,7 @@ const LL_boardings = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-
+         
       </View>
 
       <Text style={styles.text2}>Boarding Location</Text>
@@ -151,7 +151,7 @@ const LL_boardings = () => {
         <Text style={styles.errorText}>{boardingLocationError}</Text>
       ) : null}
 
-
+     
       <Text style={styles.text2}>Gender</Text>
       <View style={styles.radioButtons}>
         <TouchableOpacity
@@ -183,7 +183,7 @@ const LL_boardings = () => {
         </TouchableOpacity>
       </View>
 
-
+      
       <Text style={styles.text}>Price</Text>
       <TextInput
         style={styles.inputField}
@@ -203,20 +203,20 @@ const LL_boardings = () => {
         onChangeText={(text) => setDescription(text)}
       />
 
-
-      <TouchableOpacity style={styles.selectButton} onPress={pickImage}>
-        <Text style={styles.buttonText}>Pick an Image</Text>
-      </TouchableOpacity>
-      <View style={styles.imamgeContainer}>
-        {image && <Image
-          source={{ uri: image }}
-          style={{ width: 300, height: 300 }}
-        />}
-        <TouchableOpacity style={styles.uploadButton} onPress={uploadImage}>
-          <Text style={styles.buttonText}>Upload Image</Text>
+      
+        <TouchableOpacity style={styles.selectButton} onPress={pickImage}>
+          <Text style={styles.buttonText}>Pick an Image</Text>
         </TouchableOpacity>
-      </View>
-
+        <View style={styles.imamgeContainer}>
+          {image && <Image 
+            source={{uri:image}}
+            style={{width:300 , height:300}}
+          />}
+          <TouchableOpacity style={styles.uploadButton} onPress={uploadImage}>
+            <Text style={styles.buttonText}>Upload Image</Text>
+          </TouchableOpacity>
+        </View>
+     
 
       <TouchableOpacity style={styles.button} onPress={handleAddBoarding}>
         <Text style={styles.submitButtonText}>Add Boarding</Text>
@@ -269,18 +269,18 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#4BC56A",
     padding: 10,
-    marginBottom: -50,
-    marginTop: 10,
+    marginBottom:-50,
+    marginTop:10,
     borderRadius: 5,
-    width: 350,
-    alignItems: 'center',
-    height: 50,
-    justifyContent: 'center'
+    width:350,
+    alignItems:'center',
+    height:50,
+    justifyContent:'center'
   },
   submitButtonText: {
     color: "black",
     fontWeight: "bold",
-    fontSize: 24
+    fontSize:24
   },
   radioButtons: {
     flexDirection: "row",
@@ -301,31 +301,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#4BC56A",
     borderColor: "#4BC56A",
   },
-  selectButton: {
-    borderRadius: 5,
-    width: 120,
-    height: 50,
-    marginBottom: 10,
-    backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center'
+  selectButton:{
+    borderRadius:5,
+    width:120,
+    height:50,
+    marginBottom:10,
+    backgroundColor:'blue',
+    alignItems:'center',
+    justifyContent:'center'
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  uploadButton: {
-    borderRadius: 5,
-    width: 120,
-    height: 50,
-    marginBottom: 10,
-    backgroundColor: '#4BC56A',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20
-  }
-
+    buttonText:{
+      color:'#fff',
+      fontSize:18,
+      fontWeight:'bold'
+    },
+    uploadButton:{
+      borderRadius:5,
+      width:120,
+      height:50,
+      marginBottom:10,
+      backgroundColor:'#4BC56A',
+      alignItems:'center',
+      justifyContent:'center',
+      marginTop:20
+    }
+  
 });
 
 export default LL_boardings;

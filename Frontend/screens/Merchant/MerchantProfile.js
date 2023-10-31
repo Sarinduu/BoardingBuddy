@@ -17,7 +17,7 @@ const merchantProfile = ({ navigation }) => {
         // Create a separate function for the API request
         const fetchStoreName = async () => {
           try {
-            const response = await axios.get(`http://192.168.1.6:8000/api/store/getStore/${userId}`);
+            const response = await axios.get(`http://172.20.10.2:8000/api/store/getStore/${userId}`);
             setStore(response.data);
           } catch (error) {
             console.error('Error fetching store data:', error);
@@ -42,7 +42,7 @@ const merchantProfile = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('Tab1')}
+              onPress={() => navigation.navigate('Tenant_Profile')}
             >
               <Text style={styles.buttonText}>Manage Account</Text>
             </TouchableOpacity>

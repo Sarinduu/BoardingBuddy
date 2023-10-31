@@ -16,7 +16,7 @@ const StoreMenu = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.6:8000/api/store/getStore/${userId}`);
+        const response = await axios.get(`http://172.20.10.2:8000/api/store/getStore/${userId}`);
         setMenu(response.data.menu);
       } catch (error) {
         console.error(error);
@@ -28,7 +28,7 @@ const StoreMenu = () => {
 
     const deleteItemFromMenu = async(itemId) => {
       try {
-        const response = await axios.delete(`http://192.168.1.6:8000/api/store/deleteItemFromMenu/yourUserId/${itemId}`);
+        const response = await axios.delete(`http://172.20.10.2:8000/api/store/deleteItemFromMenu/${userId}/${itemId}`);
         if(response.status == 200){
           alert('Item deleted');
           setMenu((prevMenu) => prevMenu.filter((item) => item._id !== itemId));

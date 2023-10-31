@@ -18,7 +18,7 @@ const AddItemToMenu = ({ storeId }) => {
 
   const addItemToMenu = async () => {
     try {
-      const response = await axios.post(`http://192.168.1.6:8000/api/store/stores/${userId}/menu`, {name, price, image: imgURL});
+      const response = await axios.post(`http://172.20.10.2:8000/api/store/stores/${userId}/menu`, {name, price, image: imgURL});
 
       if (response.status === 200) {
         const updatedStore = response.data;

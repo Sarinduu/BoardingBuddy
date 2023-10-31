@@ -25,7 +25,7 @@ const RegisterScreen = () => {
 
   const [items, setItems] = useState([
     { label: "Tenant", value: "tenant" },
-    { label: "Restaurant", value: "restaurant" },
+    { label: "Merchant", value: "restaurant" },
     { label: "Landlord", value: "landlord" },
   ]);
   //-------
@@ -42,7 +42,7 @@ const RegisterScreen = () => {
 
   //   // send a POST  request to the backend API to register the user
   //   axios
-  //     .post("http://192.168.1.6:8000/api/user/register", user)
+  //     .post("http://172.20.10.2:8000/api/user/register", user)
   //     .then((response) => {
   //       console.log(response);
   //       Alert.alert(
@@ -67,7 +67,7 @@ const RegisterScreen = () => {
   const handleRegister = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.6:8000/api/user/register",
+        "http://172.20.10.2:8000/api/user/register",
         {
           method: "POST",
           headers: {

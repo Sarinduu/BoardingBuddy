@@ -70,7 +70,7 @@ const EditStoreImage = () => {
         try {
             console.log("here")
             console.log(imgURL)
-          const response = await axios.post(`http://192.168.1.6:8000/api/store/updateStoreImage/${userId}`, {imgURL: imgURL});
+          const response = await axios.post(`http://172.20.10.2:8000/api/store/updateStoreImage/${userId}`, {imgURL: imgURL});
     
           if (response.status === 200) {
             const updatedStore = response.data;

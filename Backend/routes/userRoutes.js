@@ -27,6 +27,7 @@ router.post("/register", userController.registerUser);
 // user login
 router.post("/login", userController.login);
 router.put('/upuser/:userId', userController.updateUser);
+router.put('/upuserpass/:userId', userController.updatePassword);
 router.put('/upboarding/:userId/:boardingId', userController.updateUserboarding);
 router.delete('/deleteuser/:userId', userController.deleteUser);
 router.get('/getownboardings/:userId', userController.getUserBoardings);

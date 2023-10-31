@@ -32,7 +32,7 @@ const [priceQuery, setPriceQuery] = useState('');
 
   const fetchBoardings = async () => {
     try {
-      const response = await fetch('http://192.168.1.6:8000/api/boardings');
+      const response = await fetch('http://172.20.10.2:8000/api/boardings');
       if (response.ok) {
         const data = await response.json();
         setBoardings(data);
@@ -69,7 +69,7 @@ const [priceQuery, setPriceQuery] = useState('');
 
   const handleDeletePress = async (item) => {
     try {
-      const response = await fetch(`http://192.168.1.6:8000/api/boardings/${item._id}`, {
+      const response = await fetch(`http://172.20.10.2:8000/api/boardings/${item._id}`, {
         method: 'DELETE',
       });
 
