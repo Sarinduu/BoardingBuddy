@@ -97,7 +97,7 @@ const MyBoarding = () => {
               style={{ width: 30, height: 30 }}
             />
           </View>
-          <Text style={styles.text2}>Other tenants</Text>
+          <Text style={styles.text2}>Tenants</Text>
         </View>
         <Ionicons style={styles.icon} name="chevron-forward-outline" />
       </TouchableOpacity>
@@ -110,12 +110,12 @@ const MyBoarding = () => {
 </View>
 
 
-      <TouchableOpacity 
+      {/* <TouchableOpacity 
   style={styles.editButton}
   onPress={updateBoarding}
 >
   <Text style={styles.editButtonText}>remove boarding</Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 
 
      

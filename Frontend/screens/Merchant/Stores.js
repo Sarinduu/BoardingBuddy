@@ -22,7 +22,11 @@ const Store = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    contentContainerStyle={{ backgroundColor: "#ffffff"}}
+  >
+    <View style={styles.container}>
       {stores.map((store, index) => (
         <TouchableOpacity style={styles.storeContainer} key={index}
           onPress={() => {
@@ -40,6 +44,7 @@ const Store = () => {
           </View> 
         </TouchableOpacity>
       ))}
+      </View>
     </ScrollView>
   );
 };
@@ -47,6 +52,8 @@ const Store = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    marginBottom:180,
+    
   },
   storeContainer: {
     width: '90%',

@@ -39,7 +39,11 @@ const StoreDetails = ({ route }) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: "#ffffff" }}
+    >
+    <View style={styles.container}>
       <Image
         source={store.storeImage ? { uri: store.storeImage } : require('../../assets/1440x480_52.webp')}
         style={styles.image}
@@ -58,7 +62,7 @@ const StoreDetails = ({ route }) => {
       </TouchableOpacity>
       {store.menu.map((item) => (
         <View style={styles.menuItem} key={item.id}>
-          <Image source={require('../../assets/1440x480_52.webp')} style={styles.itemImage} />
+          <Image source={{ uri: item.image }} style={styles.itemImage} />
           <View style={styles.textContainer}>
             <Text style={styles.itemText}>{item.name}</Text>
             <Text style={styles.itemText}>Rs: {item.price}</Text>
@@ -81,6 +85,7 @@ const StoreDetails = ({ route }) => {
               <Text style={[styles.buttonText, styles.whiteText]}>Pick Me Eats</Text>
         </TouchableOpacity>
       </View>
+      </View>
     </ScrollView>
   );
 };
@@ -90,6 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flex: 1,
     marginLeft: 10,
+    marginBottom:180,
   },
   heading: {
     fontSize: 20,

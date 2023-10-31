@@ -161,6 +161,7 @@ const MakePayment = () => {
                 </View>
             ))}
 
+            <Text>Ad fee : Rs.1500.00</Text>
             <TouchableOpacity
                 style={[styles.makePaymentButton, { backgroundColor: '#1F9E28' }]}
                 onPress={handlePayment}

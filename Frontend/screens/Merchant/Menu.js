@@ -28,7 +28,7 @@ const StoreMenu = () => {
 
     const deleteItemFromMenu = async(itemId) => {
       try {
-        const response = await axios.delete(`http://172.20.10.2:8000/api/store/deleteItemFromMenu/yourUserId/${itemId}`);
+        const response = await axios.delete(`http://172.20.10.2:8000/api/store/deleteItemFromMenu/${userId}/${itemId}`);
         if(response.status == 200){
           alert('Item deleted');
           setMenu((prevMenu) => prevMenu.filter((item) => item._id !== itemId));

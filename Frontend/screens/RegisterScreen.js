@@ -25,7 +25,7 @@ const RegisterScreen = () => {
 
   const [items, setItems] = useState([
     { label: "Tenant", value: "tenant" },
-    { label: "Restaurant", value: "restaurant" },
+    { label: "Merchant", value: "restaurant" },
     { label: "Landlord", value: "landlord" },
   ]);
   //-------

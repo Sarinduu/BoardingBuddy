@@ -16,6 +16,14 @@ import { useTheme } from "react-native-paper";
  import EditStoreImage from "../screens/Merchant/EditStoreProfileImage";
  import StoreReviews from '../screens/Merchant/StoreReviews'
 
+ import DeleteAccount from "../screens/DeleteAccount";
+import ChangePassword from "../screens/ChangePassword";
+
+import Profile from "../screens/Profile";
+import AccountInfo from "../screens/AccountInfo";
+
+import EditAccountInfo from "../screens/EditAccountInfo";
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
@@ -103,6 +111,11 @@ function TabNavigatorRestaurant() {
           component={CreateStoreForm}
           options={{ title: "CreateStore" }}
           />
+           <Stack.Screen
+          name="StoreReviews"
+          component={StoreReviews}
+          options={{ title: "StoreReviews" }}
+        />
       </Stack.Navigator>
     );
   }
@@ -147,6 +160,31 @@ function TabNavigatorRestaurant() {
           component={StoreReviews}
           options={{ title: "StoreReviews" }}
         />
+         <Stack.Screen
+          name="Tenant_Profile"
+          component={Profile}
+          options={{ title: "Profile" }}
+        />
+         <Stack.Screen
+          name="accountinfo"
+          component={AccountInfo}
+          options={{ title: "AccountInfo", presentation: "modal" }}
+        />
+         <Stack.Screen
+          name="editaccountinfo"
+          component={EditAccountInfo}
+          options={{ title: "Edit Account Info",presentation: "modal" }}
+        />
+        <Stack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
+        options={{ title: "Delete My Account"}}
+      />
+       <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{ title: ""}}
+      />
        
       </Stack.Navigator>
     );

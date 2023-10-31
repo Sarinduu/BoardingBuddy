@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity ,Alert} from 'react-native';
 import axios from 'axios';
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { UserType } from "../UserContext";
 
 
 const Tenantinfo = ({ route }) => {
@@ -9,6 +10,8 @@ const Tenantinfo = ({ route }) => {
   const [boardingLocation, setBoardingLocation] = useState('');
   const [tenants, setTenants] = useState([]);
   const navigation = useNavigation();
+  const { userId, userRole } = useContext(UserType);
+
   useEffect(() => {
     const fetchTenantInfo = async () => {
       try {
@@ -89,12 +92,17 @@ const Tenantinfo = ({ route }) => {
           {/* <Text style={styles.buttonText}>Update</Text> */}
         </TouchableOpacity>
 
-        <TouchableOpacity 
-  style={styles.editButton}
-  onPress={() => updateBoarding(tenants[index])}
->
-<Image source={require('../assets/delete.png')} style={styles.itemImage2} />
-</TouchableOpacity>
+        {userRole === "landlord" ? (
+                  <TouchableOpacity 
+                  style={styles.editButton}
+                  onPress={() => updateBoarding(tenants[index])}
+                >
+                <Image source={require('../assets/delete.png')} style={styles.itemImage2} />
+                </TouchableOpacity>
+        ) : null}
+
+
+
           </View>
         </View>
       ))}

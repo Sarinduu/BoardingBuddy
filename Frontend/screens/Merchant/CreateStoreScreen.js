@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView,Pressable } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from "@react-navigation/native";
 import { UserType } from '../../UserContext';
@@ -34,7 +34,10 @@ const CreateStoreForm = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    style={{ backgroundColor: "#ffffff" }}
+  >
       <View style={styles.container}>
         <Text style={styles.label}>Get Started</Text>
 
@@ -86,11 +89,14 @@ const CreateStoreForm = () => {
           onChangeText={(text) => setFormData({ ...formData, closingHours: text })}
         />
 
-        <Button
+        {/* <Button
           title="Create Store"
           onPress={handleSubmit}
           color="#1D3A70" // Set button text color
-        />
+        /> */}
+         <Pressable onPress={handleSubmit} style={styles.button}>
+          <Text style={styles.buttonText}>Create Store</Text>
+        </Pressable>
         <TextInput
           
         />
@@ -106,6 +112,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
+    marginBottom:180,
   },
   label: {
     fontSize: 20,
@@ -119,6 +126,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 40,
     padding: 10,
+  },
+  button: {
+    width: 150,
+    backgroundColor: "#1D3A70", // Updated button background color
+    padding: 15,
+    marginTop: 20,
+    marginBottom:20,
+    alignSelf: "center", // Use alignSelf instead of marginLeft and marginRight
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

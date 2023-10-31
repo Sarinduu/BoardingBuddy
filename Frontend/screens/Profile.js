@@ -45,7 +45,7 @@ const Profile = () => {
   useEffect(() => {
     fetchRecepientData();
     //console.log("message fetched")
-  },[]);
+  });
 
   return (
     <ScrollView

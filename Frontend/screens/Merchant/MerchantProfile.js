@@ -42,7 +42,7 @@ const merchantProfile = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('Tab1')}
+              onPress={() => navigation.navigate('Tenant_Profile')}
             >
               <Text style={styles.buttonText}>Manage Account</Text>
             </TouchableOpacity>
